@@ -4,14 +4,40 @@ import auth from "../../services/firebase/auth.firebase";
 import { useAuth } from "../../zustand/auth.slice";
 import { Logo } from "../../assets/icons";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const LoginCard = () => {
+  const [error, setError] = useState(false);
   const authSlice: any = useAuth();
   const onFinish = ({ email, password }: any) => {
     auth.login(email, password, authSlice.addAuthData);
+    if (
+      email.email === "Jay@email.com" &&
+      password.password !== "123456"
+    ) {
+      setError(true);
+      return;
+    }
   };
-
+  console.log(authSlice, "authslice");
+  console.log(onFinish, "on");
   const navigate = useNavigate();
+  const emailRules = [
+    {
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      message: "Please enter a valid email address!",
+    },
+  ];
+  const passwordRules = [
+    {
+      required: true,
+      message: "Please input your password!",
+    },
+    {
+      pattern: /^.{5,}$/,
+      message: "Password should contain at least 5 characters",
+    },
+  ];
 
   return (
     <div className="bg-[#E4DEDE] h-screen w-full flex justify-center items-center relative">
@@ -31,12 +57,7 @@ const LoginCard = () => {
             <Form.Item
               label="Email Id"
               name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-              ]}
+              rules={emailRules}
               className="w-full text-black text-base font-semibold"
             >
               <Input placeholder="Enter employee mail ID" />
@@ -44,16 +65,16 @@ const LoginCard = () => {
             <Form.Item
               label="Password"
               name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ]}
+              rules={passwordRules}
               className="w-full text-black text-base font-semibold"
             >
               <Input.Password />
             </Form.Item>
+            {error && (
+              <div style={{ color: "red" }}>
+                Incorrect password for the provided email
+              </div>
+            )}
             <Form.Item>
               <Button
                 type="primary"

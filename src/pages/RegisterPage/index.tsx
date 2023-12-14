@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { BG, RegisterImage } from "../../assets/images";
 import { Button, Form, Input, Select } from "antd";
-import { FlyLogo } from "../../assets/icons";
+import { Logo } from "../../assets/icons";
 import { useAuth } from "../../zustand/auth.slice";
 import auth from "../../services/firebase/auth.firebase";
 import { getAllDepartments } from "../../services/firebase/database.firebase";
@@ -32,6 +32,37 @@ const RegisterPage = () => {
       authSlice.addAuthData
     );
   };
+  const emailRules = [
+    {
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      required: true,
+      message: "Please enter a valid email address!",
+    },
+  ];
+  const passwordRules = [
+    {
+      required: true,
+      message: "Please input your password!",
+    },
+    {
+      pattern: /^.{5,}$/,
+      message: "Password should contain at least 5 characters",
+    },
+  ];
+  const numberOnlyRules = [
+    {
+      pattern: /^[0-9]+$/,
+      required: true,
+      message: "Please enter only numbers!",
+    },
+  ];
+  const alphabeticOnlyRules = [
+    {
+      pattern: /^[A-Za-z]+$/,
+      required: true,
+      message: "Please enter only alphabets!",
+    },
+  ];
   return (
     <div className="bg-[#E4DEDE] h-screen w-full flex justify-center items-center relative">
       <div className="w-full h-full overflow-hidden">
@@ -41,8 +72,8 @@ const RegisterPage = () => {
         className="bg-white border border-neutral-300 shadow-[0px_4px_19.5px_0px_rgba(0,0,0,0.25)] 
       rounded-[5px] border-solid w-[65%] h-[70%] absolute flex justify-evenly items-center"
       >
-        <section className="flex flex-col items-center justify-center">
-          <section className="flex items-center gap-5 ">
+        <section className="flex flex-col items-center justify-center gap-6">
+          {/* <section className="flex items-center gap-5 ">
             <FlyLogo className="w-[100px] h-[100px] " />
             <div className="flex flex-col">
               <p className="text-[#2A2828] text-xl italic font-bold">
@@ -52,18 +83,16 @@ const RegisterPage = () => {
                 Corporate Reimbursement Management
               </p>
             </div>
-          </section>
+          </section> */}
+          <div className="flex w-[100%]">
+            <Logo />
+          </div>
           <Form layout="vertical" onFinish={onFinish}>
             <div className="flex gap-4">
               <Form.Item
                 label="Employee Name"
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input employee name!"
-                  }
-                ]}
+                name="employeeName"
+                rules={alphabeticOnlyRules}
                 className="w-full text-black text-base font-semibold"
               >
                 <Input
@@ -74,13 +103,8 @@ const RegisterPage = () => {
 
               <Form.Item
                 label="Employee ID"
-                name={"employee"}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your employee ID!"
-                  }
-                ]}
+                name={"employeeID"}
+                rules={numberOnlyRules}
                 className="w-full text-black text-base font-semibold"
               >
                 <Input
@@ -93,12 +117,7 @@ const RegisterPage = () => {
             <Form.Item
               name={"email"}
               label="Enter Email ID"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input email id!"
-                }
-              ]}
+              rules={emailRules}
               className="w-full text-black text-base font-semibold"
             >
               <Input
@@ -122,7 +141,7 @@ const RegisterPage = () => {
                 placeholder="Department"
                 className="shadow-[0px_2px_10px_0px_rgba(96,96,96,0.14)]"
               >
-                {departments?.map((data) => (
+                {departments?.map((data:any) => (
                   <Select.Option value={data.id}>{data.name}</Select.Option>
                 ))}
               </Select>
@@ -131,12 +150,7 @@ const RegisterPage = () => {
             <Form.Item
               name={"password"}
               label="Choose Password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter password!"
-                }
-              ]}
+              rules={passwordRules}
               className="w-full text-black text-base font-semibold"
             >
               <Input

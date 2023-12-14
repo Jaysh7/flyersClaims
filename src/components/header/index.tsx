@@ -15,7 +15,7 @@ const Header = () => {
         <div>
           <AvatarComponent />
         </div>
-        <div>
+        <div className="flex justify-center items-center">
           <Button
             onClick={() => {
               auth.logout(authSlice.addAuthData);
