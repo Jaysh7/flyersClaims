@@ -3,11 +3,11 @@ import { Table, Tag } from "antd";
 import Button from "../../components/button";
 import { AddIcon } from "../../assets/icons";
 import { useState } from "react";
-import ModalComponent from "../../components/Modal";
 import ApplyReimbursement from "../../components/ApplyReimbursement";
 import ApprovalRequest from "../../components/ApprovalRequest";
-import SuccessMsg from "../../components/successfulMsg";
-import ErrorMsg from "../../components/ErrorMsg";
+// import SuccessMsg from "../../components/successfulMsg";
+// import ErrorMsg from "../../components/ErrorMsg";
+import ModalComponent from "../../components/modal";
 
 const Claims = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

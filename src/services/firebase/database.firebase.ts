@@ -13,12 +13,12 @@ import { CLAIMS, DEPARTMENTS, EMPLOYEE } from "./constants";
 
 export async function useUserListener(uid: string, callback: any) {
   const [isListenerActive, setIsListenerActive] = useState(false);
-  const listenerRef = useRef<Unsubscribe>();
+  const userListenerRef = useRef<Unsubscribe>();
   useEffect(() => {
     (async () => {
-      if (uid && !isListenerActive && !listenerRef.current) {
+      if (uid && !isListenerActive && !userListenerRef.current) {
         try {
-          listenerRef.current = onSnapshot(doc(db, EMPLOYEE, uid), (doc) => {
+          userListenerRef.current = onSnapshot(doc(db, EMPLOYEE, uid), (doc) => {
             callback(doc.data());
           });
           setIsListenerActive(true);
@@ -29,11 +29,11 @@ export async function useUserListener(uid: string, callback: any) {
     })();
     return () => {
       setIsListenerActive(false);
-      if (listenerRef.current) {
+      if (userListenerRef.current) {
         try {
           // To turn-off the listener
-          listenerRef.current();
-          listenerRef.current = undefined;
+          userListenerRef.current();
+          userListenerRef.current = undefined;
         } catch (error) {
           console.error(error);
         }
