@@ -2,8 +2,14 @@ import { Link } from "react-router-dom";
 import { BG, RegisterImage } from "../../assets/images";
 import { Button, Form, Input, Select } from "antd";
 import { FlyLogo } from "../../assets/icons";
+import { useAuth } from "../../zustand/auth.slice";
+import auth from "../../services/firebase/auth.firebase";
 
 const RegisterPage = () => {
+  const authSlice: any = useAuth();
+  const onFinish = (data: any) => {
+    auth.register(data, authSlice.addAuthData);
+  };
   return (
     <div className="bg-[#E4DEDE] h-screen w-full flex justify-center items-center relative">
       <div className="w-full h-full overflow-hidden">
@@ -25,11 +31,17 @@ const RegisterPage = () => {
               </p>
             </div>
           </section>
-          <Form layout="vertical">
+          <Form layout="vertical" onFinish={onFinish}>
             <div className="flex gap-4">
               <Form.Item
                 label="Employee Name"
-                required={true}
+                name="employeeName"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input employee name!",
+                  },
+                ]}
                 className="w-full text-black text-base font-semibold"
               >
                 <Input
@@ -40,7 +52,13 @@ const RegisterPage = () => {
 
               <Form.Item
                 label="Employee ID"
-                required={true}
+                name={"employeeID"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your employee ID!",
+                  },
+                ]}
                 className="w-full text-black text-base font-semibold"
               >
                 <Input
@@ -51,8 +69,14 @@ const RegisterPage = () => {
             </div>
 
             <Form.Item
+              name={"email"}
               label="Enter Email ID"
-              required={true}
+              rules={[
+                {
+                  required: true,
+                  message: "Please input email id!",
+                },
+              ]}
               className="w-full text-black text-base font-semibold"
             >
               <Input
@@ -63,20 +87,32 @@ const RegisterPage = () => {
 
             <Form.Item
               label="Department"
-              required={true}
+              name={"department"}
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter department!",
+                },
+              ]}
               className="w-full text-black text-base font-semibold"
             >
               <Select
                 placeholder="Department"
                 className="shadow-[0px_2px_10px_0px_rgba(96,96,96,0.14)]"
               >
-                <Select.Option value="demo">Sujai</Select.Option>
+                <Select.Option value="demo">Front End</Select.Option>
               </Select>
             </Form.Item>
 
             <Form.Item
+              name={"password"}
               label="Choose Password"
-              required={true}
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter password!",
+                },
+              ]}
               className="w-full text-black text-base font-semibold"
             >
               <Input
@@ -84,17 +120,21 @@ const RegisterPage = () => {
                 className="shadow-[0px_2px_10px_0px_rgba(96,96,96,0.14)]"
               />
             </Form.Item>
-
-            <Button className="bg-[#7700C7] w-full justify-center py-4 flex items-center text-white text-base font-semibold">
-              Register
-            </Button>
-            <div className="flex justify-center ">
+            <Form.Item>
+              <Button
+                htmlType="submit"
+                className="bg-[#7700C7] w-full justify-center py-4 flex items-center text-white text-base font-semibold"
+              >
+                Register
+              </Button>
+            </Form.Item>
+            <div className="flex justify-center items-center ">
+              <p className="text-lg">Already have an account ?</p>
               <Link
                 to="/login"
                 className="text-[#414141] text-lg font-medium"
                 type="text"
               >
-                Already have an account ?
                 <span className="text-[#7700C7] text-lg leading-10 underline ml-2">
                   Log In
                 </span>

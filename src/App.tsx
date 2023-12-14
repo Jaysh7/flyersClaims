@@ -19,7 +19,7 @@ function App() {
     }
     if (!authSlice.data?.uid) {
       if (
-        !location.pathname.includes("login") ||
+        !location.pathname.includes("login") &&
         !location.pathname.includes("signup")
       ) {
         navigate("/login");

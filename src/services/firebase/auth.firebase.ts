@@ -21,17 +21,18 @@ const auth = {
         const errorMessage = error.message;
       });
   },
-  register: (email: string, password: string, callback: Function) => {
+  register: (data: any, callback: Function) => {
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
         callback(user);
-        console.log("user", user);
+        console.log("user", data);
         // ...
       })
       .catch((error) => {
+        console.log("user", data);
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..

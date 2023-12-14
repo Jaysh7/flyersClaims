@@ -3,12 +3,15 @@ import { bgImage, loginImage } from "../../assets/images";
 import auth from "../../services/firebase/auth.firebase";
 import { useAuth } from "../../zustand/auth.slice";
 import { Logo } from "../../assets/icons";
+import { useNavigate } from "react-router-dom";
 
 const LoginCard = () => {
   const authSlice: any = useAuth();
   const onFinish = ({ email, password }: any) => {
     auth.login(email, password, authSlice.addAuthData);
   };
+
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#E4DEDE] h-screen w-full flex justify-center items-center relative">
@@ -20,11 +23,11 @@ const LoginCard = () => {
       rounded-[5px] border-solid w-[65%] h-[70%] absolute flex justify-evenly items-center"
       >
         <section className="flex items-center flex-col w-[40%]">
-          <div>
+          <div className="flex w-[100%]">
             <Logo />
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} className="mt-7">
             <Form.Item
               label="Email Id"
               name="email"
@@ -60,6 +63,10 @@ const LoginCard = () => {
                 Login
               </Button>
             </Form.Item>
+            <div className="flex gap-40">
+              <p>Don't have a Flyer’s account?</p>
+              <a onClick={() => navigate("/signup")}>Sign Up Now</a>
+            </div>
           </Form>
         </section>
         <span className="w-[1px] h-[80%] flex items-center justify-center bg-[#989898]"></span>

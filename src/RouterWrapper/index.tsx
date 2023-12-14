@@ -8,7 +8,7 @@ const RouterWrapper = () => {
     <Routes>
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/claims" element={<Claims />} />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/signup" element={<RegisterPage />} />
     </Routes>
   );
 };
