@@ -1,14 +1,36 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
 import { BG, RegisterImage } from "../../assets/images";
 import { Button, Form, Input, Select } from "antd";
 import { FlyLogo } from "../../assets/icons";
 import { useAuth } from "../../zustand/auth.slice";
 import auth from "../../services/firebase/auth.firebase";
+import { getAllDepartments } from "../../services/firebase/database.firebase";
+import { useEffect, useState } from "react";
 
 const RegisterPage = () => {
   const authSlice: any = useAuth();
+  const [departments, setDepartments] = useState<any>([]);
+  useEffect(() => {
+    (async () => {
+      const data = await getAllDepartments();
+      if (departments) {
+        setDepartments(data);
+      }
+    })();
+  }, []);
+
   const onFinish = (data: any) => {
-    auth.register(data, authSlice.addAuthData);
+    auth.register(
+      {
+        ...data,
+        emailVerified: false,
+        isLead: false,
+        isFinanceAdmin: false,
+        isAdmin: false
+      },
+      authSlice.addAuthData
+    );
   };
   return (
     <div className="bg-[#E4DEDE] h-screen w-full flex justify-center items-center relative">
@@ -35,12 +57,12 @@ const RegisterPage = () => {
             <div className="flex gap-4">
               <Form.Item
                 label="Employee Name"
-                name="employeeName"
+                name="name"
                 rules={[
                   {
                     required: true,
-                    message: "Please input employee name!",
-                  },
+                    message: "Please input employee name!"
+                  }
                 ]}
                 className="w-full text-black text-base font-semibold"
               >
@@ -52,12 +74,12 @@ const RegisterPage = () => {
 
               <Form.Item
                 label="Employee ID"
-                name={"employeeID"}
+                name={"employee"}
                 rules={[
                   {
                     required: true,
-                    message: "Please input your employee ID!",
-                  },
+                    message: "Please input your employee ID!"
+                  }
                 ]}
                 className="w-full text-black text-base font-semibold"
               >
@@ -74,8 +96,8 @@ const RegisterPage = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input email id!",
-                },
+                  message: "Please input email id!"
+                }
               ]}
               className="w-full text-black text-base font-semibold"
             >
@@ -91,8 +113,8 @@ const RegisterPage = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please enter department!",
-                },
+                  message: "Please enter department!"
+                }
               ]}
               className="w-full text-black text-base font-semibold"
             >
@@ -100,7 +122,9 @@ const RegisterPage = () => {
                 placeholder="Department"
                 className="shadow-[0px_2px_10px_0px_rgba(96,96,96,0.14)]"
               >
-                <Select.Option value="demo">Front End</Select.Option>
+                {departments?.map((data) => (
+                  <Select.Option value={data.id}>{data.name}</Select.Option>
+                ))}
               </Select>
             </Form.Item>
 
@@ -110,8 +134,8 @@ const RegisterPage = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please enter password!",
-                },
+                  message: "Please enter password!"
+                }
               ]}
               className="w-full text-black text-base font-semibold"
             >

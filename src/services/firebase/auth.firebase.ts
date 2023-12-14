@@ -2,8 +2,11 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
+  signOut
 } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "./config";
+import { EMPLOYEE } from "./constants";
 
 const auth = {
   login: (email: string, password: string, callback: Function) => {
@@ -13,32 +16,29 @@ const auth = {
         // Signed in
         callback(userCredential.user);
         const user = userCredential.user;
+        console.log("user", user);
         // ...
       })
       .catch((error) => {
         console.log("error", error);
-        const errorCode = error.code;
-        const errorMessage = error.message;
       });
   },
   register: (data: any, callback: Function) => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
+        delete data.password;
         // Signed up
         const user = userCredential.user;
-        callback(user);
-        console.log("user", data);
-        // ...
+        callback({ uid: user?.uid });
+        setDoc(doc(db, EMPLOYEE, user?.uid), { ...data, uid: user?.uid });
       })
       .catch((error) => {
-        console.log("user", data);
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        console.log("user registration", data);
         // ..
       });
   },
-  logout: (stateClearCallback : any) => {
+  logout: (stateClearCallback: any) => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
@@ -49,6 +49,6 @@ const auth = {
       .catch((error) => {
         // An error happened.
       });
-  },
+  }
 };
 export default auth;
