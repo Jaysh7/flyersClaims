@@ -1,19 +1,16 @@
 import { Button, Form, Input } from "antd";
 import { bgImage, loginImage } from "../../assets/images";
-import { Logo } from "../../assets";
 import auth from "../../services/firebase/auth.firebase";
 import { useAuth } from "../../zustand/auth.slice";
+import { Logo } from "../../assets/icons";
 
 const LoginCard = () => {
-  const authSlice : any = useAuth();
+  const authSlice: any = useAuth();
   const onFinish = ({ email, password }: any) => {
     auth.login(email, password, authSlice.addAuthData);
-    console.log(password);
   };
-  console.log(authSlice.data);
 
   return (
-
     <div className="bg-[#E4DEDE] h-screen w-full flex justify-center items-center relative">
       <div className="w-full h-full overflow-hidden">
         <img src={bgImage} />

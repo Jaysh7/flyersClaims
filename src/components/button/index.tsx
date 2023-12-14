@@ -1,4 +1,3 @@
-import React from "react";
 export type ButtonProps = {
   children: string;
   variant?: "primary" | "secondary" | "teritory" | undefined;
@@ -30,7 +29,10 @@ const Button = ({
   };
   return (
     <div>
-      <button className={`${color(variant)} ${className} flex items-center gap-2`} onClick={onClick}>
+      <button
+        className={`${color(variant)} ${className} flex items-center gap-2`}
+        onClick={onClick}
+      >
         {leftIcon && <span className="h-[14px] w-[14px]">{leftIcon}</span>}
         {children}
         {rightIcon && <span className="h-[14px] w-[14px]">{rightIcon}</span>}

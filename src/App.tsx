@@ -5,8 +5,9 @@ import { useAuth } from "./zustand/auth.slice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 function App() {
-  const authSlice:any = useAuth();
+  const authSlice: any = useAuth();
   const navigate = useNavigate();
+  console.log("authSlice", authSlice);
   useEffect(() => {
     if (authSlice.data?.uid) {
       if (

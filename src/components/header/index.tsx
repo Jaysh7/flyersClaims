@@ -1,12 +1,11 @@
-import React from "react";
-import { Logo } from "../../assets";
 import AvatarComponent from "../avatar";
 import Button from "../button";
 import auth from "../../services/firebase/auth.firebase";
 import { useAuth } from "../../zustand/auth.slice";
+import { Logo } from "../../assets/icons";
 
 const Header = () => {
-  const authSlice:any = useAuth();
+  const authSlice: any = useAuth();
   return (
     <div className="shadow-xl bg-white flex min-h-[80px] justify-between items-center">
       <div className="ml-6">
