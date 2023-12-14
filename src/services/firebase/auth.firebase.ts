@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -34,8 +35,7 @@ const auth = {
         setDoc(doc(db, EMPLOYEE, user?.uid), { ...data, uid: user?.uid });
       })
       .catch((error) => {
-        console.log("user registration", data);
-        // ..
+        console.log('error', error)
       });
   },
   logout: (stateClearCallback: any) => {
@@ -47,6 +47,7 @@ const auth = {
         console.log("Sign-out successful.");
       })
       .catch((error) => {
+        console.log("error", error);
         // An error happened.
       });
   }

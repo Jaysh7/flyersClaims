@@ -1,9 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { Button, DatePicker, Form, Input, Select } from "antd";
+import { Button, Form, Input } from "antd";
 import { PdfIcon } from "../../assets/icons";
-import ViewBill from "./ViewBill";
-
-const { TextArea } = Input;
 
 const ApprovalRequest: React.FC = () => {
   const [openPdf, setOpenPdf] = useState<any>();
@@ -139,4 +137,4 @@ const ApprovalRequest: React.FC = () => {
   );
 };
 
-export default () => <ApprovalRequest />;
+export default ApprovalRequest;

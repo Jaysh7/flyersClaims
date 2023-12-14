@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AvatarComponent from "../avatar";
 import Button from "../button";
 import auth from "../../services/firebase/auth.firebase";
