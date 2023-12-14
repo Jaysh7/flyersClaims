@@ -7,6 +7,7 @@ const ModalComponent = ({
   onClose,
   children,
   modalTitle,
+  closeIcon,
 }: any) => {
   return (
     <>
@@ -18,6 +19,7 @@ const ModalComponent = ({
         footer={footerVisible}
         onOk={onOk}
         onCancel={onClose}
+        closeIcon={closeIcon}
       >
         {children}
       </Modal>

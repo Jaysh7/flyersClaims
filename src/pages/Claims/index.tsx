@@ -3,9 +3,11 @@ import { Table, Tag } from "antd";
 import Button from "../../components/button";
 import { AddIcon } from "../../assets/icons";
 import { useState } from "react";
-import ModalComponent from "../../components/modal";
+import ModalComponent from "../../components/Modal";
 import ApplyReimbursement from "../../components/ApplyReimbursement";
 import ApprovalRequest from "../../components/ApprovalRequest";
+import SuccessMsg from "../../components/successfulMsg";
+import ErrorMsg from "../../components/ErrorMsg";
 
 const Claims = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -154,6 +156,18 @@ const Claims = () => {
         </div>
         <div className="mt-10">
           <Table columns={columns} dataSource={data} />
+          <Button onClick={showModal}>ClickME</Button>
+          {isModalOpen ? (
+            <ModalComponent
+              footerVisible={null}
+              modalTitle={"Apply Reimbursement"}
+              modalOpen={isModalOpen}
+              onOk={handleOk}
+              onClose={handleCancel}
+              closeIcon={false}
+              children={<ErrorMsg />}
+            />
+          ) : null}
         </div>
       </div>
     </div>
