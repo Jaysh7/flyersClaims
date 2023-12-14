@@ -156,18 +156,6 @@ const Claims = () => {
         </div>
         <div className="mt-10">
           <Table columns={columns} dataSource={data} />
-          <Button onClick={showModal}>ClickME</Button>
-          {isModalOpen ? (
-            <ModalComponent
-              footerVisible={null}
-              modalTitle={"Apply Reimbursement"}
-              modalOpen={isModalOpen}
-              onOk={handleOk}
-              onClose={handleCancel}
-              closeIcon={false}
-              children={<ErrorMsg />}
-            />
-          ) : null}
         </div>
       </div>
     </div>
