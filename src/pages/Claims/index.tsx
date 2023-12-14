@@ -2,14 +2,43 @@ import Header from "../../components/header";
 import { Table, Tag } from "antd";
 import Button from "../../components/button";
 import { AddIcon } from "../../assets/icons";
+import { useState } from "react";
+import ModalComponent from "../../components/Modal";
+import ApplyReimbursement from "../../components/ApplyReimbursement";
+import ApprovalRequest from "../../components/ApprovalRequest";
 
 const Claims = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openBill, setOpenBill] = useState<any>({
+    state: false,
+    billData: null,
+  });
+  const showModal = () => {
+    setIsModalOpen(true);
+    setOpenBill(false);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+    setOpenBill(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setOpenBill(false);
+  };
   const columns = [
     {
       title: "Reimbursement type",
       dataIndex: "name",
       key: "name",
-      render: (text: any) => <a>{text}</a>,
+      render: (text: any, rowdata: any) => (
+        <a
+          onClick={() => {
+            setOpenBill({ state: true, billdata: rowdata });
+          }}
+        >
+          {text}
+        </a>
+      ),
     },
     {
       title: "Claim number",
@@ -83,11 +112,10 @@ const Claims = () => {
       tags: ["Pending"],
     },
   ];
+
   return (
     <div>
-      <div>
-        <Header />
-      </div>
+      <Header />
       <div className="px-7">
         <div className="mt-10 flex justify-between">
           <Button
@@ -95,12 +123,34 @@ const Claims = () => {
             children={"My claims"}
             className="px-8 py-2"
           />
+
           <Button
-            className="px-8 py-2"
+            className="px-8 py-2 cursor-pointer"
+            onClick={showModal}
             variant="primary"
             leftIcon={<AddIcon fill={"white"} className="w-4 h-4" />}
             children={"Add your claim"}
           />
+          {isModalOpen && (
+            <ModalComponent
+              footerVisible={null}
+              modalTitle={"Apply Reimbursement"}
+              modalOpen={isModalOpen}
+              onOk={handleOk}
+              onClose={handleCancel}
+              children={<ApplyReimbursement />}
+            />
+          )}
+          {openBill.state && (
+            <ModalComponent
+              footerVisible={null}
+              modalTitle={"Approval Request"}
+              modalOpen={openBill.state}
+              onOk={handleOk}
+              onClose={handleCancel}
+              children={<ApprovalRequest />}
+            />
+          )}
         </div>
         <div className="mt-10">
           <Table columns={columns} dataSource={data} />
