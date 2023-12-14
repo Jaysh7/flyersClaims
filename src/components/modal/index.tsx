@@ -1,19 +1,25 @@
-import { useState } from "react";
 import { Modal } from "antd";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ModalComponent = ({ modalOpen, onOk, onClose }: any) => {
+const ModalComponent = ({
+  modalOpen,
+  onOk,
+  footerVisible,
+  onClose,
+  children,
+  modalTitle,
+}: any) => {
   return (
     <>
       <Modal
-        title="Basic Modal"
+        title={modalTitle}
+        width={600}
+        centered
         open={modalOpen}
+        footer={footerVisible}
         onOk={onOk}
         onCancel={onClose}
       >
-        <p className="text-red-700">Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        {children}
       </Modal>
     </>
   );

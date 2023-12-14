@@ -1,7 +1,7 @@
 import Header from "../../components/header";
 import { Table, Tag } from "antd";
 import Button from "../../components/button";
-import { AddIcon } from "../../assets";
+import { AddIcon } from "../../assets/icons";
 
 const Claims = () => {
   const columns = [
@@ -37,11 +37,11 @@ const Claims = () => {
             if (tag === "Rejected") {
               color = "volcano";
             } else if (tag === "Approved by team lead") {
-                color = "blue"
-            }else if (tag === "Approved by finance") {
-                color = "green"
-            }else if (tag === "Pending") {
-                color = "yellow"
+              color = "blue";
+            } else if (tag === "Approved by finance") {
+              color = "green";
+            } else if (tag === "Pending") {
+              color = "yellow";
             }
             return (
               <Tag color={color} key={tag}>
@@ -76,12 +76,12 @@ const Claims = () => {
       tags: ["Approved by finance"],
     },
     {
-        key: "3",
-        name: "Joe Black",
-        age: 32,
-        address: "1000",
-        tags: ["Pending"],
-      },
+      key: "3",
+      name: "Joe Black",
+      age: 32,
+      address: "1000",
+      tags: ["Pending"],
+    },
   ];
   return (
     <div>
