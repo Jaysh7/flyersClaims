@@ -1,16 +1,14 @@
-import React from "react";
-import { useState } from "react";
 import { Avatar } from "antd";
 
-const UserList = ["U", "Lucy", "Tom", "Edward"];
-const ColorList = ["#f56a00", "#7265e6", "#ffbf00", "#00a2ae"];
-const GapList = [4, 3, 2, 1];
-
-const AvatarComponent = () => {
-  const [user, setUser] = useState(UserList[0]);
-  const [color, setColor] = useState(ColorList[0]);
-  const [gap, setGap] = useState(GapList[0]);
-
+const AvatarComponent = ({
+  color,
+  gap,
+  user
+}: {
+  color?: string;
+  gap?: number;
+  user?: string;
+}) => {
   return (
     <>
       <Avatar

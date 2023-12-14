@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../../components/header";
 import { Table } from "antd";
 import Button from "../../components/button";

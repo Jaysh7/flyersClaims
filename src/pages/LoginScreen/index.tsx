@@ -1,4 +1,3 @@
-import React from 'react'
 import LoginCard from './loginCard'
 
 const LoginScreen = () => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import RouterWrapper from "./Router";
 import "./App.css";
 import "./services/firebase/config";
@@ -10,9 +11,9 @@ import {
 } from "./services/firebase/database.firebase";
 import { useClaims } from "./zustand/claims.slice";
 function App() {
-  const authSlice = useAuth();
-  const claimsSlice = useClaims();
-  const navigate = useNavigate();
+  const authSlice: any = useAuth();
+  const claimsSlice: any  = useClaims();
+  const navigate: any  = useNavigate();
 
   // user details firebase listener
   useUserListener(authSlice.data?.uid, authSlice.addAuthData);
