@@ -4,12 +4,10 @@ import LoginScreen from "../pages/LoginScreen";
 
 const RouterWrapper = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginScreen/>} />
-        <Route path="/claims" element={<Claims/>} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/login" element={<LoginScreen />} />
+      <Route path="/claims" element={<Claims />} />
+    </Routes>
   );
 };
 

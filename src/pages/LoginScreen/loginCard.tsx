@@ -1,85 +1,73 @@
-import React, { useState } from "react";
-import { Logo } from "../../assets";
 import { Button, Form, Input } from "antd";
-import { loginImage } from "../../assets/images";
+import { bgImage, loginImage } from "../../assets/images";
+import { Logo } from "../../assets";
+import auth from "../../services/firebase/auth.firebase";
+import { useAuth } from "../../zustand/auth.slice";
 
 const LoginCard = () => {
-  // type InitialStateType = {
-  //     mail: string,
-  //     password: string
-  //   };
-  // const initialState = {
-  //     mail: '',
-  //     password: ''
-  //   };
-  //   const [user, setUser] = useState<InitialStateType>(initialState);
-
+  const authSlice : any = useAuth();
   const onFinish = ({ email, password }: any) => {
-    console.log(email);
+    auth.login(email, password, authSlice.addAuthData);
     console.log(password);
   };
+  console.log(authSlice.data);
 
   return (
-    <div className="border border-neutral-300 shadow-lg bg-white flex w-[700px] flex-col rounded-md border-solid p-5 mt-10">
-      <div>
-        <Logo />
-      </div>
-      <div className="flex divide-x gap-7">
-        <div className="flex flex-col justify-center">
-          <section className="mt-5">
-            <span className="text-neutral-700 text-xl font-bold leading-10 tracking-tight">
-              Sign in
-            </span>
-            <Form
-              layout="vertical"
-              style={{ maxWidth: 600 }}
-              onFinish={onFinish}
-            >
-              <Form.Item
-                label="Email Id"
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your email!",
-                  },
-                ]}
-                className="w-full text-black text-base font-semibold"
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your password!",
-                  },
-                ]}
-                className="w-full text-black text-base font-semibold"
-              >
-                <Input.Password />
-              </Form.Item>
-              <Form.Item>
-                <Button  type="primary" className="w-full bg-[#7700C7]" htmlType="submit">
-                  Login
-                </Button>
-              </Form.Item>
-            </Form>
-          </section>
-        </div>
 
-        <div className="flex flex-col justify-center">
-          <section className="mt-5 flex flex-col justify-center items-center">
-            <img src={loginImage} />
-            <p className="text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor{" "}
-            </p>
-          </section>
-        </div>
+    <div className="bg-[#E4DEDE] h-screen w-full flex justify-center items-center relative">
+      <div className="w-full h-full overflow-hidden">
+        <img src={bgImage} />
       </div>
+      <section
+        className="bg-white border border-neutral-300 shadow-[0px_4px_19.5px_0px_rgba(0,0,0,0.25)] 
+      rounded-[5px] border-solid w-[65%] h-[70%] absolute flex justify-evenly items-center"
+      >
+        <section className="flex items-center flex-col w-[40%]">
+          <div>
+            <Logo />
+          </div>
+
+          <Form layout="vertical" onFinish={onFinish}>
+            <Form.Item
+              label="Email Id"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your email!",
+                },
+              ]}
+              className="w-full text-black text-base font-semibold"
+            >
+              <Input placeholder="Enter employee mail ID" />
+            </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+              className="w-full text-black text-base font-semibold"
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                className="w-full bg-[#7700C7]"
+                htmlType="submit"
+              >
+                Login
+              </Button>
+            </Form.Item>
+          </Form>
+        </section>
+        <span className="w-[1px] h-[80%] flex items-center justify-center bg-[#989898]"></span>
+        <img src={loginImage} />
+      </section>
     </div>
   );
 };

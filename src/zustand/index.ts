@@ -6,7 +6,7 @@ export const useBearStore = create(
     persist(
       (set, get:any) => ({
         bears: 0,
-        addABear: () => set({ bears: get().bears + 1 })
+        addABear: (data : any) => set({ bears: data })
       }),
       {
         name: "food-storage", // name of the item in the storage (must be unique)
