@@ -15,10 +15,7 @@ const auth = {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        callback(userCredential.user);
-        const user = userCredential.user;
-        console.log("user", user);
-        // ...
+        callback({ uid: userCredential.user?.uid });
       })
       .catch((error) => {
         console.log("error", error);
@@ -35,7 +32,7 @@ const auth = {
         setDoc(doc(db, EMPLOYEE, user?.uid), { ...data, uid: user?.uid });
       })
       .catch((error) => {
-        console.log('error', error)
+        console.log("error", error);
       });
   },
   logout: (stateClearCallback: any) => {
