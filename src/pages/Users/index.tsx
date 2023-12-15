@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu, Select, Table } from "antd";
+import { Button, Dropdown, Menu, Table } from "antd";
 import Header from "../../components/header";
 import { DownOutlined } from "@ant-design/icons";
 const UsersPage = () => {
