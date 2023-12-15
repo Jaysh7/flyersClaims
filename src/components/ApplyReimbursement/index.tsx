@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
 import { UploadIcon } from "../../assets/icons";
-import { addClaim } from "../../services/firebase/database.firebase";
+import {
+  addClaim} from "../../services/firebase/database.firebase";
 import { useAuth } from "../../zustand/auth.slice";
 import { ClaimStatus } from "../../enums";
 import FileTypeIcon from "../FileTypeIcon";
@@ -11,11 +12,13 @@ const { TextArea } = Input;
 
 const ApplyReimbursement: React.FC = () => {
   const authSlice: any = useAuth();
+  console.log("authSlice", authSlice.users);
+
   const onFinish = (data: any) => {
     addClaim(
       {
         ...data,
-        status: ClaimStatus.PENDING,
+        status: ClaimStatus.PENDING
       },
       authSlice?.data?.uid
     );
@@ -58,10 +61,14 @@ const ApplyReimbursement: React.FC = () => {
             className="w-full text-black text-base font-semibold"
           >
             <Select>
-              <Select.Option value="Thamodharan">Thamodharan</Select.Option>
-              <Select.Option value="Priyanka">Priyanka</Select.Option>
-              <Select.Option value="Ananthu">Ananthu</Select.Option>
-              <Select.Option value="Gopinath">Gopinath</Select.Option>
+              {authSlice?.users?.map(
+                (data: any) =>
+                  data?.isLead === true && (
+                    <Select.Option key={data?.uid} value={data?.uid}>
+                      {data?.name}
+                    </Select.Option>
+                  )
+              )}
             </Select>
           </Form.Item>
           <Form.Item
