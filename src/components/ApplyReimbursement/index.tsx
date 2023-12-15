@@ -1,17 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
+import { Button, DatePicker, Form, Input, Select, Upload, message } from "antd";
 import { UploadIcon } from "../../assets/icons";
 import { addClaim } from "../../services/firebase/database.firebase";
 import { useAuth } from "../../zustand/auth.slice";
 import { ClaimStatus } from "../../enums";
 import FileTypeIcon from "../FileTypeIcon";
+import { getFileExtension } from "../../utils/functions";
 
 const { TextArea } = Input;
 
 const ApplyReimbursement: React.FC = () => {
   const authSlice: any = useAuth();
   const [file, setFile] = useState<any>();
+  console.log("authSlice", authSlice.users);
+
   const onFinish = (data: any) => {
     addClaim(
       {
@@ -48,14 +51,82 @@ const ApplyReimbursement: React.FC = () => {
       <section className="flex justify-between gap-10">
         <Form.Item
           label="Title"
-          rules={alphabeticOnlyRules}
           name={"title"}
           required={true}
           className="w-full text-black text-base font-semibold"
         >
           <Input />
         </Form.Item>
+        {/* <Form.Item
+            label="Employee ID"
+            required={true}
+            name={"employee"}
+            className="w-full text-black text-base font-semibold"
+          >
+            <Input />
+          </Form.Item> */}
       </section>
+      <section className="flex justify-between gap-10">
+        <Form.Item
+          label="Lead"
+          required={true}
+          name={"lead"}
+          className="w-full text-black text-base font-semibold"
+        >
+          <Select>
+            {authSlice?.users?.map(
+              (data: any) =>
+                data?.isLead === true && (
+                  <Select.Option key={data?.uid} value={data?.uid}>
+                    {data?.name}
+                  </Select.Option>
+                )
+            )}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Date"
+          name={"date"}
+          required={true}
+          className="w-full text-black text-base font-semibold"
+        >
+          <DatePicker className="h-8 w-full" />
+        </Form.Item>
+      </section>
+      <section className="flex justify-between gap-10">
+        <Form.Item
+          label="Reimbursement Type"
+          name={"reimbursementType"}
+          required={true}
+          className="w-full text-black text-base font-semibold"
+        >
+          <Select>
+            <Select.Option value="Accommodation">Accommodation</Select.Option>
+            <Select.Option value="Internet">Internet</Select.Option>
+            <Select.Option value="Mobile">Mobile</Select.Option>
+            <Select.Option value="Subsriptions">Subsriptions</Select.Option>
+            <Select.Option value="Travel">Travel</Select.Option>
+            <Select.Option value="Miscellaneous">Miscellaneous</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Claim Amount"
+          name={"amount"}
+          required={true}
+          className="w-full text-black text-base font-semibold"
+        >
+          <Input />
+        </Form.Item>
+      </section>
+      <Form.Item
+        label="Title"
+        rules={alphabeticOnlyRules}
+        name={"title"}
+        required={true}
+        className="w-full text-black text-base font-semibold"
+      >
+        <Input />
+      </Form.Item>
       <section className="flex justify-between gap-10">
         <Form.Item
           label="Lead"
@@ -132,15 +203,24 @@ const ApplyReimbursement: React.FC = () => {
         ) : (
           <Upload
             accept=".pdf,.jpeg"
-            beforeUpload={() => {
-              /* update state here */ return false;
-            }}
             name="avatar"
             listType="picture-card"
             className="avatar-uploader"
             showUploadList={false}
-            // beforeUpload={beforeUpload}
-            onChange={fileSelectHandler}
+            beforeUpload={(file) => {
+              if (
+                !["pdf", "jpg", "png", "jpeg"].includes(
+                  getFileExtension(file.name)
+                )
+              ) {
+                message.error(`Please upload a pdf or image file`);
+                return false;
+              } else {
+                fileSelectHandler(file);
+                return true;
+              }
+            }}
+            // onChange={fileSelectHandler}
           >
             <div>
               <UploadIcon className="h-9 w-9" />

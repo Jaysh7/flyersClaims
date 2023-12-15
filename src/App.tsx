@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {
   useClaimsListener,
   useUserListener,
+  useUsersListener
 } from "./services/firebase/database.firebase";
 import { useClaims } from "./zustand/claims.slice";
 function App() {
@@ -17,6 +18,7 @@ function App() {
 
   // user details firebase listener
   useUserListener(authSlice.data?.uid, authSlice.addAuthData);
+  useUsersListener(authSlice.data?.uid, authSlice.setUsersData);
   useClaimsListener(authSlice.data?.uid, claimsSlice.setClaims);
 
   useEffect(() => {

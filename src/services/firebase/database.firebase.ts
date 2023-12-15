@@ -7,7 +7,8 @@ import {
   getDocs,
   onSnapshot,
   query,
-  updateDoc
+  updateDoc,
+  where
 } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { db, storage } from "./config";
@@ -88,9 +89,60 @@ export async function useClaimsListener(uid: string, callback: any) {
   }, [uid]);
 }
 
+export async function useUsersListener(uid: string, callback: any) {
+  const [isListenerActive, setIsListenerActive] = useState(false);
+  const usersListenerRef = useRef<Unsubscribe>();
+  useEffect(() => {
+    (async () => {
+      if (uid && !isListenerActive && !usersListenerRef.current) {
+        try {
+          const q = query(collection(db, EMPLOYEE));
+          usersListenerRef.current = onSnapshot(q, (querySnapshot) => {
+            const cities: any[] = [];
+            querySnapshot.forEach((doc) => {
+              cities.push(doc.data());
+            });
+            callback(cities);
+          });
+          setIsListenerActive(true);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    })();
+    return () => {
+      setIsListenerActive(false);
+      if (usersListenerRef.current) {
+        try {
+          // To turn-off the listener
+          usersListenerRef.current();
+          usersListenerRef.current = undefined;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    // eslint-disable-next-line
+  }, [uid]);
+}
+
 export async function getAllDepartments() {
   try {
     const q = query(collection(db, DEPARTMENTS));
+    const querySnapshot = await getDocs(q);
+    const departments: any = [];
+    querySnapshot.forEach((doc) => {
+      departments.push(doc.data());
+    });
+    return departments;
+  } catch (error) {
+    console.error("get departments error", error);
+  }
+}
+
+export async function getAllLeads() {
+  try {
+    const q = query(collection(db, EMPLOYEE), where("isLead", "==", true));
     const querySnapshot = await getDocs(q);
     const departments: any = [];
     querySnapshot.forEach((doc) => {
