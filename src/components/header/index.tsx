@@ -14,7 +14,7 @@ const Header = () => {
       </div>
       <div className="mr-6 flex gap-3">
         <div>
-          <AvatarComponent />
+          <AvatarComponent user={authSlice?.data?.name} />
         </div>
         <div className="flex justify-center items-center">
           <Button

@@ -44,7 +44,6 @@ export async function useUserListener(uid: string, callback: any) {
 }
 
 export async function useClaimsListener(uid: string, callback: any) {
-  console.log("uid", uid);
   const [isListenerActive, setIsListenerActive] = useState(false);
   const listenerRef = useRef<Unsubscribe>();
   useEffect(() => {

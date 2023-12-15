@@ -6,9 +6,12 @@ import { AddIcon } from "../../assets/icons";
 import { useState } from "react";
 import ApplyReimbursement from "../../components/ApplyReimbursement";
 import ApprovalRequest from "../../components/ApprovalRequest";
+import { useClaims } from "../../zustand/claims.slice";
+import { ClaimStatus } from "../../enums";
 import ModalComponent from "../../components/Modal";
 
 const Claims = () => {
+  const claimsSlice: any = useClaims();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openBill, setOpenBill] = useState<any>({
     state: false,
@@ -31,10 +34,10 @@ const Claims = () => {
       title: "Reimbursement type",
       dataIndex: "name",
       key: "name",
-      render: (text: any, rowdata: any) => (
+      render: (text: any, rowData: any) => (
         <a
           onClick={() => {
-            setOpenBill({ state: true, billdata: rowdata });
+            setOpenBill({ state: true, billData: rowData });
           }}
         >
           {text}
@@ -43,74 +46,44 @@ const Claims = () => {
     },
     {
       title: "Claim number",
-      dataIndex: "age",
-      key: "age",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Date of Submission",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Claiming amount",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "amount",
+      key: "amount",
     },
     {
       title: "Status",
-      key: "tags",
-      dataIndex: "tags",
-      render: (_: any, { tags }: any) => (
+      key: "status",
+      dataIndex: "status",
+      render: (_: any, { status }: any) => (
         <>
-          {tags.map((tag: any) => {
+          {(() => {
             let color = "yellow";
-            if (tag === "Rejected") {
+            if (status === ClaimStatus.REJECTED) {
               color = "volcano";
-            } else if (tag === "Approved by team lead") {
+            } else if (status === ClaimStatus.APPROVE_BY_LEAD) {
               color = "blue";
-            } else if (tag === "Approved by finance") {
+            } else if (status === ClaimStatus.APPROVED_BY_FINANCE_OR_HR) {
               color = "green";
-            } else if (tag === "Pending") {
+            } else if (status === ClaimStatus.PENDING) {
               color = "yellow";
             }
             return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
+              <Tag color={color} key={status}>
+                {status?.toUpperCase()}
               </Tag>
             );
-          })}
+          })()}
         </>
       ),
-    },
-  ];
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "1000",
-      tags: ["Rejected"],
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "1000",
-      tags: ["Approved by team lead"],
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "1000",
-      tags: ["Approved by finance"],
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "1000",
-      tags: ["Pending"],
     },
   ];
 
@@ -149,12 +122,12 @@ const Claims = () => {
               modalOpen={openBill.state}
               onOk={handleOk}
               onClose={handleCancel}
-              children={<ApprovalRequest />}
+              children={<ApprovalRequest data={openBill.billData} />}
             />
           )}
         </div>
         <div className="mt-10">
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={claimsSlice.data} />
         </div>
       </div>
     </div>
