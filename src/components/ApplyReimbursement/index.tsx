@@ -32,15 +32,15 @@ const ApplyReimbursement: React.FC = () => {
     {
       pattern: /^[0-9]+$/,
       required: true,
-      message: "Please enter only numbers!",
-    },
+      message: "Please enter only numbers!"
+    }
   ];
   const alphabeticOnlyRules = [
     {
       pattern: /^[A-Za-z]+$/,
       required: true,
-      message: "Please enter only alphabets!",
-    },
+      message: "Please enter only alphabets!"
+    }
   ];
   return (
     <Form
@@ -77,7 +77,8 @@ const ApplyReimbursement: React.FC = () => {
           <Select>
             {authSlice?.users?.map(
               (data: any) =>
-                data?.isLead === true && (
+                data?.isLead === true &&
+                authSlice.data?.uid !== data?.uid && (
                   <Select.Option key={data?.uid} value={data?.uid}>
                     {data?.name}
                   </Select.Option>
