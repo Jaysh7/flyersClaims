@@ -19,7 +19,7 @@ const AvatarComponent = ({
     <>
       <Avatar
         style={{
-          backgroundColor: color,
+          backgroundColor: color || "#7700c757",
           verticalAlign: "middle",
           textTransform: "uppercase",
           fontWeight: "500"

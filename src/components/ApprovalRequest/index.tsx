@@ -170,7 +170,8 @@ const ApprovalRequest = ({
         </div>
       </>
       <section className="flex gap-4 justify-center items-center">
-        {authSlice?.data?.uid !== data?.employee ? (
+        {authSlice?.data?.uid !== data?.employee &&
+        data?.status !== ClaimStatus.REJECTED ? (
           <>
             <Button
               className="border-[rgba(119,0,199,1)] border-2 text-[rgba(119,0,199,1)] bg-[#E0C9EF] text-base

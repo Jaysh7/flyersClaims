@@ -9,20 +9,35 @@ import FileTypeIcon from "../FileTypeIcon";
 
 const { TextArea } = Input;
 
-const ApplyReimbursement: React.FC = () => {
+const ApplyReimbursement = ({
+  onSuccess,
+  onError
+}: {
+  onError: any;
+  onSuccess: any;
+}) => {
   const authSlice: any = useAuth();
   const [file, setFile] = useState<any>();
 
   const onFinish = async (data: any) => {
-    await addClaim(
-      {
-        ...data,
-        status: ClaimStatus.PENDING,
-        employee: authSlice?.data?.uid,
-        employeeName: authSlice?.data?.name
-      },
-      authSlice?.data?.uid
-    );
+    try {
+      await addClaim(
+        {
+          ...data,
+          status: ClaimStatus.PENDING,
+          employee: authSlice?.data?.uid,
+          employeeName: authSlice?.data?.name
+        },
+        authSlice?.data?.uid
+      );
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch (error) {
+      if (onError) {
+        onError();
+      }
+    }
   };
   const fileSelectHandler = (event: any) => {
     setFile(event.file);

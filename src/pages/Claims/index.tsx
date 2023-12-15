@@ -175,7 +175,17 @@ const Claims = () => {
               modalOpen={isModalOpen}
               onOk={handleOk}
               onClose={handleCancel}
-              children={<ApplyReimbursement />}
+              children={
+                <ApplyReimbursement
+                  onSuccess={() => {
+                    setIsModalOpen(false);
+                    message.success("Claim created successfully!");
+                  }}
+                  onError={() => {
+                    message.error("Something went wrong!");
+                  }}
+                />
+              }
             />
           )}
           {openBill.state && (
@@ -190,8 +200,11 @@ const Claims = () => {
                   onApproveHandler={() => {}}
                   onRejectHandler={() => {
                     message.success("Claim rejected successfully");
+                    setOpenBill({ state: false, billDate: null });
                   }}
-                  onError={() => {}}
+                  onError={() => {
+                    message.error("Something went wrong!");
+                  }}
                   data={openBill.billData}
                 />
               }
