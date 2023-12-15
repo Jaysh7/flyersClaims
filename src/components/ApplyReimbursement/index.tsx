@@ -11,6 +11,7 @@ const { TextArea } = Input;
 
 const ApplyReimbursement: React.FC = () => {
   const authSlice: any = useAuth();
+  const [file, setFile] = useState<any>();
   const onFinish = (data: any) => {
     addClaim(
       {
@@ -20,140 +21,144 @@ const ApplyReimbursement: React.FC = () => {
       authSlice?.data?.uid
     );
   };
-  const [file, setFile] = useState<any>();
   const fileSelectHandler = (event: any) => {
     setFile(event.file);
   };
+  const numberOnlyRules = [
+    {
+      pattern: /^[0-9]+$/,
+      required: true,
+      message: "Please enter only numbers!",
+    },
+  ];
+  const alphabeticOnlyRules = [
+    {
+      pattern: /^[A-Za-z]+$/,
+      required: true,
+      message: "Please enter only alphabets!",
+    },
+  ];
   return (
-    <>
-      <Form
-        disabled={false}
-        style={{ maxWidth: 600 }}
-        layout="vertical"
-        onFinish={onFinish}
-      >
-        <section className="flex justify-between gap-10">
-          <Form.Item
-            label="Title"
-            name={"title"}
-            required={true}
-            className="w-full text-black text-base font-semibold"
-          >
-            <Input />
-          </Form.Item>
-          {/* <Form.Item
-            label="Employee ID"
-            required={true}
-            name={"employee"}
-            className="w-full text-black text-base font-semibold"
-          >
-            <Input />
-          </Form.Item> */}
-        </section>
-        <section className="flex justify-between gap-10">
-          <Form.Item
-            label="Lead"
-            required={true}
-            name={"lead"}
-            className="w-full text-black text-base font-semibold"
-          >
-            <Select>
-              <Select.Option value="Thamodharan">Thamodharan</Select.Option>
-              <Select.Option value="Priyanka">Priyanka</Select.Option>
-              <Select.Option value="Ananthu">Ananthu</Select.Option>
-              <Select.Option value="Gopinath">Gopinath</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Date"
-            name={"date"}
-            required={true}
-            className="w-full text-black text-base font-semibold"
-          >
-            <DatePicker className="h-8 w-full" />
-          </Form.Item>
-        </section>
-        <section className="flex justify-between gap-10">
-          <Form.Item
-            label="Reimbursement Type"
-            name={"reimbursementType"}
-            required={true}
-            className="w-full text-black text-base font-semibold"
-          >
-            <Select>
-              <Select.Option value="Accommodation">Accommodation</Select.Option>
-              <Select.Option value="Internet">Internet</Select.Option>
-              <Select.Option value="Mobile">Mobile</Select.Option>
-              <Select.Option value="Subsriptions">Subsriptions</Select.Option>
-              <Select.Option value="Travel">Travel</Select.Option>
-              <Select.Option value="Miscellaneous">Miscellaneous</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Claim Amount"
-            name={"amount"}
-            required={true}
-            className="w-full text-black text-base font-semibold"
-          >
-            <Input />
-          </Form.Item>
-        </section>
+    <Form
+      disabled={false}
+      style={{ maxWidth: 600 }}
+      layout="vertical"
+      onFinish={onFinish}
+    >
+      <section className="flex justify-between gap-10">
         <Form.Item
-          className="w-full text-black text-base font-semibold"
-          label="Remarks if any"
-          name={"description"}
-        >
-          <TextArea
-            value="Type remarks if any"
-            className="text-[#989898] text-xs"
-          />
-        </Form.Item>
-        <Form.Item
-          label="Bill Attachment"
-          name={"attachment"}
-          className=" text-black text-base font-semibold"
+          label="Title"
+          rules={alphabeticOnlyRules}
+          name={"title"}
           required={true}
-          // valuePropName="Type remarks if any"
-          // getValueFromEvent={normFile}
+          className="w-full text-black text-base font-semibold"
         >
-          {file ? (
-            <div className="flex items-center gap-2">
-              <FileTypeIcon fileName={file.name} />
-              <span className="text-sm not-italic font-medium">
-                {file.name}
-              </span>
-            </div>
-          ) : (
-            <Upload
-              accept="pdf, jpeg"
-              beforeUpload={() => {
-                /* update state here */ return false;
-              }}
-              name="avatar"
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              // beforeUpload={beforeUpload}
-              onChange={fileSelectHandler}
-            >
-              <div>
-                <UploadIcon className="h-9 w-9" />
-              </div>
-            </Upload>
-          )}
+          <Input />
         </Form.Item>
-        <section className="flex justify-center items-center">
-          <Button
-            type="primary"
-            className="w-full bg-[#7700C7]"
-            htmlType="submit"
+      </section>
+      <section className="flex justify-between gap-10">
+        <Form.Item
+          label="Lead"
+          required={true}
+          name={"lead"}
+          className="w-full text-black text-base font-semibold"
+        >
+          <Select>
+            <Select.Option value="Thamodharan">Thamodharan</Select.Option>
+            <Select.Option value="Priyanka">Priyanka</Select.Option>
+            <Select.Option value="Ananthu">Ananthu</Select.Option>
+            <Select.Option value="Gopinath">Gopinath</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Date"
+          name={"date"}
+          required={true}
+          className="w-full text-black text-base font-semibold"
+        >
+          <DatePicker className="h-8 w-full" />
+        </Form.Item>
+      </section>
+      <section className="flex justify-between gap-10">
+        <Form.Item
+          label="Reimbursement Type"
+          name={"reimbursementType"}
+          required={true}
+          className="w-full text-black text-base font-semibold"
+        >
+          <Select>
+            <Select.Option value="Accommodation">Accommodation</Select.Option>
+            <Select.Option value="Internet">Internet</Select.Option>
+            <Select.Option value="Mobile">Mobile</Select.Option>
+            <Select.Option value="Subsriptions">Subsriptions</Select.Option>
+            <Select.Option value="Travel">Travel</Select.Option>
+            <Select.Option value="Miscellaneous">Miscellaneous</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Claim Amount"
+          rules={numberOnlyRules}
+          name={"amount"}
+          required={true}
+          className="w-full text-black text-base font-semibold"
+        >
+          <Input />
+        </Form.Item>
+      </section>
+      <Form.Item
+        className="w-full text-black text-base font-semibold"
+        label="Remarks if any"
+        name={"description"}
+        required={true}
+      >
+        <TextArea
+          value="Type remarks if any"
+          className="text-[#989898] text-xs"
+        />
+      </Form.Item>
+      <Form.Item
+        label="Bill Attachment"
+        name={"attachment"}
+        className=" text-black text-base font-semibold"
+        required={true}
+        // valuePropName="Type remarks if any"
+        // getValueFromEvent={normFile}
+      >
+        {file ? (
+          <div className="flex items-center gap-2">
+            <FileTypeIcon fileName={file.name} />
+            <span className="text-sm not-italic font-medium">{file.name}</span>
+          </div>
+        ) : (
+          <Upload
+            accept=".pdf,.jpeg"
+            beforeUpload={() => {
+              /* update state here */ return false;
+            }}
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            // beforeUpload={beforeUpload}
+            onChange={fileSelectHandler}
           >
-            Submit
-          </Button>
-        </section>
-        {/* <Form.Item></Form.Item> */}
-      </Form>
-    </>
+            <div>
+              <UploadIcon className="h-9 w-9" />
+            </div>
+          </Upload>
+        )}
+      </Form.Item>
+      <section className="flex justify-center items-center">
+        <Button
+          type="primary"
+          className="w-full bg-[#7700C7]"
+          htmlType="submit"
+        >
+          Submit
+        </Button>
+      </section>
+      {/* <Form.Item></Form.Item> */}
+    </Form>
   );
 };
 
