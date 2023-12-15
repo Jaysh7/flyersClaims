@@ -46,8 +46,8 @@ const Claims = () => {
     },
     {
       title: "Claim number",
-      dataIndex: "title",
-      key: "title",
+      dataIndex: "id",
+      key: "id",
     },
     {
       title: "Date of Submission",

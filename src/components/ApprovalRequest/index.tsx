@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button, Form, Input } from "antd";
-import { PdfIcon } from "../../assets/icons";
 import { getFileType } from "../../utils/functions";
+import FileTypeIcon from "../FileTypeIcon";
 
 const ApprovalRequest = ({ data }: { data: any }) => {
   const [openPdf, setOpenPdf] = useState<any>();
@@ -89,7 +89,7 @@ const ApprovalRequest = ({ data }: { data: any }) => {
           <section className="flex justify-between">
             {openPdf ? null : (
               <div className="flex items-center">
-                <PdfIcon className="w-8 h-8" />
+                <FileTypeIcon fileName={data.attachment.name} />
                 <span className="text-sm not-italic font-medium">
                   {data.attachment.name}
                 </span>

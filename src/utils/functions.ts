@@ -4,5 +4,5 @@ export function getFileType(name: string) {
 }
 
 export function getFileExtension(fileName: string) {
-  return fileName.substring(fileName.lastIndexOf(".") + 1);
+  return fileName?.substring(fileName?.lastIndexOf(".") + 1);
 }

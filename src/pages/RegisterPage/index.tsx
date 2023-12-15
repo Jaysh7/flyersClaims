@@ -36,32 +36,32 @@ const RegisterPage = () => {
     {
       pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       required: true,
-      message: "Please enter a valid email address!",
-    },
+      message: "Please enter a valid email address!"
+    }
   ];
   const passwordRules = [
     {
       required: true,
-      message: "Please input your password!",
+      message: "Please input your password!"
     },
     {
       pattern: /^.{5,}$/,
-      message: "Password should contain at least 5 characters",
-    },
+      message: "Password should contain at least 5 characters"
+    }
   ];
   const numberOnlyRules = [
     {
       pattern: /^[0-9]+$/,
       required: true,
-      message: "Please enter only numbers!",
-    },
+      message: "Please enter only numbers!"
+    }
   ];
   const alphabeticOnlyRules = [
     {
       pattern: /^[A-Za-z]+$/,
       required: true,
-      message: "Please enter only alphabets!",
-    },
+      message: "Please enter only alphabets!"
+    }
   ];
   return (
     <div className="bg-[#E4DEDE] h-screen w-full flex justify-center items-center relative">
@@ -141,7 +141,7 @@ const RegisterPage = () => {
                 placeholder="Department"
                 className="shadow-[0px_2px_10px_0px_rgba(96,96,96,0.14)]"
               >
-                {departments?.map((data:any) => (
+                {departments?.map((data: any) => (
                   <Select.Option value={data.id}>{data.name}</Select.Option>
                 ))}
               </Select>

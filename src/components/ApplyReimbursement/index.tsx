@@ -1,18 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useState } from "react";
 import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
 import { UploadIcon } from "../../assets/icons";
 import { addClaim } from "../../services/firebase/database.firebase";
 import { useAuth } from "../../zustand/auth.slice";
 import { ClaimStatus } from "../../enums";
+import FileTypeIcon from "../FileTypeIcon";
 
 const { TextArea } = Input;
 
 const ApplyReimbursement: React.FC = () => {
-  const authSlice = useAuth();
+  const authSlice: any = useAuth();
   const onFinish = (data: any) => {
-    console.log("data", data);
-    addClaim({ ...data, status: ClaimStatus.PENDING }, authSlice?.data?.uid);
+    addClaim(
+      {
+        ...data,
+        status: ClaimStatus.PENDING,
+      },
+      authSlice?.data?.uid
+    );
+  };
+  const [file, setFile] = useState<any>();
+  const fileSelectHandler = (event: any) => {
+    setFile(event.file);
   };
   return (
     <>
@@ -31,14 +41,14 @@ const ApplyReimbursement: React.FC = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label="Employee ID"
             required={true}
             name={"employee"}
             className="w-full text-black text-base font-semibold"
           >
             <Input />
-          </Form.Item>
+          </Form.Item> */}
         </section>
         <section className="flex justify-between gap-10">
           <Form.Item
@@ -106,21 +116,31 @@ const ApplyReimbursement: React.FC = () => {
           // valuePropName="Type remarks if any"
           // getValueFromEvent={normFile}
         >
-          <Upload
-            beforeUpload={() => {
-              /* update state here */ return false;
-            }}
-            name="avatar"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            // beforeUpload={beforeUpload}
-            // onChange={handleChange}
-          >
-            <div>
-              <UploadIcon className="h-9 w-9" />
+          {file ? (
+            <div className="flex items-center gap-2">
+              <FileTypeIcon fileName={file.name} />
+              <span className="text-sm not-italic font-medium">
+                {file.name}
+              </span>
             </div>
-          </Upload>
+          ) : (
+            <Upload
+              accept="pdf, jpeg"
+              beforeUpload={() => {
+                /* update state here */ return false;
+              }}
+              name="avatar"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              // beforeUpload={beforeUpload}
+              onChange={fileSelectHandler}
+            >
+              <div>
+                <UploadIcon className="h-9 w-9" />
+              </div>
+            </Upload>
+          )}
         </Form.Item>
         <section className="flex justify-center items-center">
           <Button

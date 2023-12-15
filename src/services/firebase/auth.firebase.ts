@@ -18,7 +18,7 @@ const auth = {
         callback({ uid: userCredential.user?.uid });
       })
       .catch((error) => {
-        console.log("error", error);
+        console.error("error", error);
       });
   },
   register: (data: any, callback: Function) => {
@@ -32,7 +32,7 @@ const auth = {
         setDoc(doc(db, EMPLOYEE, user?.uid), { ...data, uid: user?.uid });
       })
       .catch((error) => {
-        console.log("error", error);
+        console.error("error", error);
       });
   },
   logout: (stateClearCallback: any) => {
@@ -41,10 +41,9 @@ const auth = {
       .then(() => {
         stateClearCallback(null);
         // Sign-out successful.
-        console.log("Sign-out successful.");
       })
       .catch((error) => {
-        console.log("error", error);
+        console.error("error", error);
         // An error happened.
       });
   }

@@ -98,14 +98,13 @@ export async function getAllDepartments() {
     });
     return departments;
   } catch (error) {
-    console.log("get departments error", error);
+    console.error("get departments error", error);
   }
 }
 
 export async function addClaim(data: any, userId: string) {
   try {
     const file = data?.attachment?.file;
-    console.log("file", file);
     const docRef = await addDoc(collection(db, CLAIMS), {
       ...data,
       date: new Date(data).toLocaleDateString(),
@@ -114,7 +113,6 @@ export async function addClaim(data: any, userId: string) {
         downloadUrl: ""
       }
     });
-    console.log("Document written with ID: ", docRef.id);
     uploadClaimAttachment(
       file,
       userId,
@@ -132,14 +130,15 @@ export async function addClaim(data: any, userId: string) {
             path: filePath,
             downloadUrl: url,
             name: file?.name
-          }
+          },
+          id: docRef.id
         });
       })
       .catch((error) => {
-        console.log("error", error);
+        console.error("error", error);
         // Handle any errors
       });
   } catch (error) {
-    console.log("get departments error", error);
+    console.error("get departments error", error);
   }
 }

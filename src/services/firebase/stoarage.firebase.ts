@@ -10,8 +10,5 @@ export function uploadClaimAttachment(
   const storageRef = ref(storage, `${EMPLOYEE}/${userId}/${claimAttachment}`);
 
   // 'file' comes from the Blob or File API
-  uploadBytes(storageRef, file).then((snapshot) => {
-    console.log("snapshot", snapshot);
-    console.log("Uploaded a blob or file!");
-  });
+  uploadBytes(storageRef, file).then(() => {});
 }
