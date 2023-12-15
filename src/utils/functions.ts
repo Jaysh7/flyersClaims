@@ -1,6 +1,6 @@
 export function getFileType(name: string) {
   if (name?.includes("pdf")) return "application/pdf";
-  return "image/jpeg";
+  return `image/${getFileExtension(name)}`;
 }
 
 export function getFileExtension(fileName: string) {
