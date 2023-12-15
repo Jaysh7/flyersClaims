@@ -67,6 +67,16 @@ const ApprovalRequest = ({
       onError();
     }
   };
+  function downloadClaimAttachment() {
+    const link = document.createElement("a");
+    // If you don't know the name or want to use
+    // the webserver default set name = ''
+    link.setAttribute("download", data?.attachment?.name);
+    link.href = data?.attachment?.downloadUrl;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
   return (
     <>
       {openPdf ? (
@@ -160,6 +170,7 @@ const ApprovalRequest = ({
               </Button>
 
               <Button
+                onClick={downloadClaimAttachment}
                 className="border-transparent text-[rgba(119,0,199,1)]  text-base font-semibold
            flex items-center"
               >
