@@ -9,18 +9,16 @@ const ApprovalRequest = ({ data }: { data: any }) => {
   const handleViewPdf = () => {
     setOpenPdf(!openPdf);
   };
-  
+
   return (
     <>
       {openPdf ? (
         <section className=" !h-[60vh] ">
           <embed
-            src="https://buffer.com/library/content/images/2023/09/instagram-image-size.jpg"
+            src={data?.attachment?.downloadUrl}
             width="auto"
             height="auto"
-            type={getFileType(
-              "https://buffer.com/library/content/images/2023/09/instagram-image-size.jpg"
-            )}
+            type={getFileType(data?.attachment?.downloadUrl)}
             className="w-full h-full"
           />
         </section>
@@ -93,7 +91,7 @@ const ApprovalRequest = ({ data }: { data: any }) => {
               <div className="flex items-center">
                 <PdfIcon className="w-8 h-8" />
                 <span className="text-sm not-italic font-medium">
-                  Sample file.pdf
+                  {data.attachment.name}
                 </span>
               </div>
             )}

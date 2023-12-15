@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React from "react";
 import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
 import { UploadIcon } from "../../assets/icons";
+import { addClaim } from "../../services/firebase/database.firebase";
+import { useAuth } from "../../zustand/auth.slice";
+import { ClaimStatus } from "../../enums";
 
 const { TextArea } = Input;
 
 const ApplyReimbursement: React.FC = () => {
-  const [claims, setClaims] = useState<any>([]);
+  const authSlice = useAuth();
   const onFinish = (data: any) => {
-    setClaims(data);
+    console.log("data", data);
+    addClaim({ ...data, status: ClaimStatus.PENDING }, authSlice?.data?.uid);
   };
-  console.log(claims, "data");
   return (
     <>
       <Form
@@ -21,8 +24,8 @@ const ApplyReimbursement: React.FC = () => {
       >
         <section className="flex justify-between gap-10">
           <Form.Item
-            label="Employee Name"
-            name={"EmployeeName"}
+            label="Title"
+            name={"title"}
             required={true}
             className="w-full text-black text-base font-semibold"
           >
@@ -31,7 +34,7 @@ const ApplyReimbursement: React.FC = () => {
           <Form.Item
             label="Employee ID"
             required={true}
-            name={"EmployeeID"}
+            name={"employee"}
             className="w-full text-black text-base font-semibold"
           >
             <Input />
@@ -52,8 +55,8 @@ const ApplyReimbursement: React.FC = () => {
             </Select>
           </Form.Item>
           <Form.Item
-            label="DatePicker"
-            name={"datepicker"}
+            label="Date"
+            name={"date"}
             required={true}
             className="w-full text-black text-base font-semibold"
           >
@@ -78,7 +81,7 @@ const ApplyReimbursement: React.FC = () => {
           </Form.Item>
           <Form.Item
             label="Claim Amount"
-            name={"claimAmount"}
+            name={"amount"}
             required={true}
             className="w-full text-black text-base font-semibold"
           >
@@ -88,7 +91,7 @@ const ApplyReimbursement: React.FC = () => {
         <Form.Item
           className="w-full text-black text-base font-semibold"
           label="Remarks if any"
-          name={"remarks"}
+          name={"description"}
         >
           <TextArea
             value="Type remarks if any"
@@ -97,7 +100,7 @@ const ApplyReimbursement: React.FC = () => {
         </Form.Item>
         <Form.Item
           label="Bill Attachment"
-          name={"bill"}
+          name={"attachment"}
           className=" text-black text-base font-semibold"
           required={true}
           // valuePropName="Type remarks if any"

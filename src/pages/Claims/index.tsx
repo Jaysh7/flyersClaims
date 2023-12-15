@@ -32,8 +32,8 @@ const Claims = () => {
   const columns = [
     {
       title: "Reimbursement type",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "reimbursementType",
+      key: "reimbursementType",
       render: (text: any, rowData: any) => (
         <a
           onClick={() => {
@@ -46,13 +46,13 @@ const Claims = () => {
     },
     {
       title: "Claim number",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "title",
+      key: "title",
     },
     {
       title: "Date of Submission",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "date",
+      key: "date",
     },
     {
       title: "Claiming amount",
