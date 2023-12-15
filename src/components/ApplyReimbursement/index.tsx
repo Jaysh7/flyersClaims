@@ -202,7 +202,7 @@ const ApplyReimbursement: React.FC = () => {
           </div>
         ) : (
           <Upload
-            accept=".pdf,.jpeg"
+            accept=".pdf,.jpeg,.jpg,.png"
             name="avatar"
             listType="picture-card"
             className="avatar-uploader"
