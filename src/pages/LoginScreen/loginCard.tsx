@@ -19,8 +19,6 @@ const LoginCard = () => {
       return;
     }
   };
-  console.log(authSlice, "authslice");
-  console.log(onFinish, "on");
   const navigate = useNavigate();
   const emailRules = [
     {

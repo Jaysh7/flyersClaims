@@ -1,27 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Form, Input } from "antd";
 import { PdfIcon } from "../../assets/icons";
+import { getFileType } from "../../utils/functions";
 
-const ApprovalRequest: React.FC = () => {
+const ApprovalRequest = ({ data }: { data: any }) => {
   const [openPdf, setOpenPdf] = useState<any>();
   const handleViewPdf = () => {
     setOpenPdf(!openPdf);
   };
+  
   return (
     <>
       {openPdf ? (
-        <>
-          <section className="fixed top-[5%] right-[15%] left-[10%] h-[80%] w-[80%] ">
-            <embed
-              src="https://www.africau.edu/images/default/sample.pdf"
-              width="auto"
-              height="auto"
-              type="application/pdf"
-              className="w-full h-full"
-            />
-          </section>
-        </>
+        <section className=" !h-[60vh] ">
+          <embed
+            src="https://buffer.com/library/content/images/2023/09/instagram-image-size.jpg"
+            width="auto"
+            height="auto"
+            type={getFileType(
+              "https://buffer.com/library/content/images/2023/09/instagram-image-size.jpg"
+            )}
+            className="w-full h-full"
+          />
+        </section>
       ) : (
         <>
           <Form disabled={false} style={{ maxWidth: 600 }} layout="vertical">
@@ -36,7 +38,7 @@ const ApprovalRequest: React.FC = () => {
                 label="Employee ID"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input />
+                <Input value={data?.data?.employee} readOnly />
               </Form.Item>
             </section>
             <section className="flex justify-between gap-10">
@@ -44,13 +46,13 @@ const ApprovalRequest: React.FC = () => {
                 label="Lead"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input />
+                <Input value={data?.data?.lead} readOnly />
               </Form.Item>
               <Form.Item
-                label="DatePicker"
+                label="Date"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input />
+                <Input value={data?.data?.date} readOnly />
               </Form.Item>
             </section>
             <section className="flex justify-between gap-10">
@@ -58,20 +60,24 @@ const ApprovalRequest: React.FC = () => {
                 label="Reimbursement Type"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input />
+                <Input value={data?.data?.reimbursementType} readOnly />
               </Form.Item>
               <Form.Item
                 label="Claim Amount"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input />
+                <Input value={data?.data?.amount} readOnly />
               </Form.Item>
             </section>
             <Form.Item
               className="w-full text-black text-base font-semibold"
               label="Remarks if any"
             >
-              <Input className="h-[200px]" />
+              <Input
+                value={data?.data?.description}
+                readOnly
+                className="h-[200px]"
+              />
             </Form.Item>
           </Form>
         </>
@@ -94,9 +100,7 @@ const ApprovalRequest: React.FC = () => {
             <div
               // className="flex gap-3 "
               className={`flex gap-3 ${
-                openPdf
-                  ? "absolute bottom-[-350px] items-center justify-center"
-                  : ""
+                openPdf ? " hidden items-center justify-center" : ""
               }`}
             >
               <Button
@@ -117,9 +121,7 @@ const ApprovalRequest: React.FC = () => {
         </div>
       </>
       <section className="flex gap-4 justify-center items-center">
-        {openPdf ? (
-          "null"
-        ) : (
+        {openPdf ? null : (
           <>
             <Button
               className="border-[rgba(119,0,199,1)] border-2 text-[rgba(119,0,199,1)] bg-[#E0C9EF] text-base
