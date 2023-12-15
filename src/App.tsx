@@ -20,6 +20,8 @@ function App() {
   useUserListener(authSlice.data?.uid, authSlice.addAuthData);
   useUsersListener(authSlice.data?.uid, authSlice.setUsersData);
   useClaimsListener(authSlice.data?.uid, claimsSlice.setClaims);
+  //console.log(authSlice.data.isLead)
+  
 
   useEffect(() => {
     if (authSlice.data?.uid) {
