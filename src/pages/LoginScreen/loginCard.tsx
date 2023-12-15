@@ -30,8 +30,8 @@ const LoginCard = () => {
       message: "Please input your password!",
     },
     {
-      pattern: /^.{5,}$/,
-      message: "Password should contain at least 5 characters",
+      pattern: /^.{6,}$/,
+      message: "Password should contain at least 6 characters",
     },
   ];
 

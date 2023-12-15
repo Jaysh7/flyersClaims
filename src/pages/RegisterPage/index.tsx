@@ -45,9 +45,9 @@ const RegisterPage = () => {
       message: "Please input your password!"
     },
     {
-      pattern: /^.{5,}$/,
-      message: "Password should contain at least 5 characters"
-    }
+      pattern: /^.{6,}$/,
+      message: "Password should contain at least 6 characters",
+    },
   ];
   const numberOnlyRules = [
     {
@@ -73,17 +73,6 @@ const RegisterPage = () => {
       rounded-[5px] border-solid w-[65%] h-[70%] absolute flex justify-evenly items-center"
       >
         <section className="flex flex-col items-center justify-center gap-6">
-          {/* <section className="flex items-center gap-5 ">
-            <FlyLogo className="w-[100px] h-[100px] " />
-            <div className="flex flex-col">
-              <p className="text-[#2A2828] text-xl italic font-bold">
-                Flyer’s Claims
-              </p>
-              <p className="text-[#414141] text-lg not-italic font-normal">
-                Corporate Reimbursement Management
-              </p>
-            </div>
-          </section> */}
           <div className="flex w-[100%]">
             <Logo />
           </div>

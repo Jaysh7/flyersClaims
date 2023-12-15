@@ -2,21 +2,22 @@
 import Header from "../../components/header";
 import { AddIcon } from "../../assets/icons";
 import { ClaimStatus } from "../../enums";
-import { Table, Tag } from "antd";
+import { Table, Tabs, Tag } from "antd";
 import { useState } from "react";
 import { useClaims } from "../../zustand/claims.slice";
 import Button from "../../components/button";
 import ApplyReimbursement from "../../components/ApplyReimbursement";
 import ApprovalRequest from "../../components/ApprovalRequest";
-import ModalComponent from "../../components/Modal";
+import ModalComponent from "../../components/modal";
+import { useAuth } from "../../zustand/auth.slice";
 
 const Claims = () => {
   const claimsSlice: any = useClaims();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [openBill, setOpenBill] = useState<any>({
     state: false,
     billData: null,
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -30,7 +31,62 @@ const Claims = () => {
     setIsModalOpen(false);
     setOpenBill(false);
   };
-  const columns = [
+  const pendingapprovals = [
+    {
+      title: "Employee Name",
+      dataIndex: "name",
+      key: "name",
+      render: (text: any) => <a>{text}</a>,
+    },
+    {
+      title: "Employee Id",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Reimbursement Type",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "Submission date",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "Claiming amount",
+      dataIndex: "address",
+      key: "address",
+    },
+  ];
+  const data = [
+    {
+      key: "1",
+      name: "John Brown",
+      address: "1000",
+      id: 12333,
+    },
+    {
+      key: "2",
+      name: "Jim Green",
+      address: "1000",
+      id: 12333,
+    },
+    {
+      key: "3",
+      name: "Joe Black",
+      address: "1000",
+      id: 12333,
+    },
+    {
+      key: "3",
+      name: "Joe Black",
+      address: "1000",
+      id: 12333,
+    },
+  ];
+
+  const claims = [
     {
       title: "Reimbursement type",
       dataIndex: "reimbursementType",
@@ -87,18 +143,15 @@ const Claims = () => {
       ),
     },
   ];
+  const authSlice: any = useAuth();
 
   return (
     <div>
       <Header />
       <div className="px-7">
         <div className="mt-10 flex justify-between">
-          <Button
-            variant="secondary"
-            children={"My claims"}
-            className="px-8 py-2"
-          />
-
+          <div className="flex gap-3">
+          </div>
           <Button
             className="px-8 py-2 cursor-pointer"
             onClick={showModal}
@@ -106,6 +159,7 @@ const Claims = () => {
             leftIcon={<AddIcon fill={"white"} className="w-4 h-4" />}
             children={"Add your claim"}
           />
+
           {isModalOpen && (
             <ModalComponent
               footerVisible={null}
@@ -128,7 +182,33 @@ const Claims = () => {
           )}
         </div>
         <div className="mt-10">
-          <Table columns={columns} dataSource={claimsSlice.data} />
+          
+        {authSlice?.data?.isLead === true ? <>
+         <Tabs
+            type="line"
+           
+          >
+            <Tabs.TabPane tab=" My claims" key=" My claims">
+              <Table columns={claims} dataSource={claimsSlice.data} />
+            </Tabs.TabPane>
+
+            <Tabs.TabPane tab="Pending approvals" key=" Pending approvals">
+              <Table
+                columns={pendingapprovals}
+                dataSource={data}
+              />
+            </Tabs.TabPane>
+          </Tabs>
+         </>
+         :<>
+         <Tabs
+            type="line"
+          >
+            <Tabs.TabPane tab=" My claims" key=" My claims">
+              <Table columns={claims} dataSource={claimsSlice.data} />
+            </Tabs.TabPane>
+          </Tabs>
+         </>}
         </div>
       </div>
     </div>
