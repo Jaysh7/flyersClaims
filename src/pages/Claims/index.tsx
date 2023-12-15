@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Header from "../../components/header";
 import { Table, Tag } from "antd";
 import Button from "../../components/button";
@@ -5,9 +6,7 @@ import { AddIcon } from "../../assets/icons";
 import { useState } from "react";
 import ApplyReimbursement from "../../components/ApplyReimbursement";
 import ApprovalRequest from "../../components/ApprovalRequest";
-// import SuccessMsg from "../../components/successfulMsg";
-// import ErrorMsg from "../../components/ErrorMsg";
-import ModalComponent from "../../components/modal";
+import ModalComponent from "../../components/Modal";
 
 const Claims = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

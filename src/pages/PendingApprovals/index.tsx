@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Header from "../../components/header";
 import { Table } from "antd";
 import Button from "../../components/button";
@@ -37,25 +38,25 @@ const PendingApprovals = () => {
       key: "1",
       name: "John Brown",
       address: "1000",
-      id: 12333
+      id: 12333,
     },
     {
       key: "2",
       name: "Jim Green",
       address: "1000",
-      id: 12333
+      id: 12333,
     },
     {
       key: "3",
       name: "Joe Black",
       address: "1000",
-      id: 12333
+      id: 12333,
     },
     {
       key: "3",
       name: "Joe Black",
       address: "1000",
-      id: 12333
+      id: 12333,
     },
   ];
   return (

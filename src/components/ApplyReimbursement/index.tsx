@@ -1,10 +1,10 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
 import { UploadIcon } from "../../assets/icons";
 
 const { TextArea } = Input;
 
-const ApplyReimbursement: React.FC = () => {
+const ApplyReimbursement = () => {
   return (
     <>
       <Form disabled={false} style={{ maxWidth: 600 }} layout="vertical">
@@ -31,11 +31,10 @@ const ApplyReimbursement: React.FC = () => {
             className="w-full text-black text-base font-semibold"
           >
             <Select>
-              <Select.Option value="demo">Sujai</Select.Option>
-              <Select.Option value="demo">Subas</Select.Option>
-              <Select.Option value="demo">Afroz</Select.Option>
-              <Select.Option value="demo">Chandran</Select.Option>
-              <Select.Option value="demo">Demo</Select.Option>
+              <Select.Option value="demo">Thamodharan</Select.Option>
+              <Select.Option value="demo">Priyanka</Select.Option>
+              <Select.Option value="demo">Ananthu</Select.Option>
+              <Select.Option value="demo">Gopinath</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
@@ -53,7 +52,12 @@ const ApplyReimbursement: React.FC = () => {
             className="w-full text-black text-base font-semibold"
           >
             <Select>
-              <Select.Option value="demo">Demo</Select.Option>
+              <Select.Option value="demo">Accommodation</Select.Option>
+              <Select.Option value="demo">Internet</Select.Option>
+              <Select.Option value="demo">Mobile</Select.Option>
+              <Select.Option value="demo">Subsriptions</Select.Option>
+              <Select.Option value="demo">Travel</Select.Option>
+              <Select.Option value="demo">Miscellaneous</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
@@ -104,4 +108,4 @@ const ApplyReimbursement: React.FC = () => {
   );
 };
 
-export default () => <ApplyReimbursement />;
+export default ApplyReimbursement;

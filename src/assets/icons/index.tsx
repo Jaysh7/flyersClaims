@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const UploadIcon = ({ className }: any) => {
   return (
     <svg
@@ -220,7 +221,7 @@ export const FlyLogo = ({ className }: any) => {
     </svg>
   );
 };
-export const Logo = ({}) => {
+export const Logo = () => {
   return (
     <svg
       width="200"

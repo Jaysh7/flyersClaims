@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Input } from "antd";
 import { bgImage, loginImage } from "../../assets/images";
 import auth from "../../services/firebase/auth.firebase";
@@ -11,10 +12,7 @@ const LoginCard = () => {
   const authSlice: any = useAuth();
   const onFinish = ({ email, password }: any) => {
     auth.login(email, password, authSlice.addAuthData);
-    if (
-      email.email === "Jay@email.com" &&
-      password.password !== "123456"
-    ) {
+    if (email.email === "Jay@email.com" && password.password !== "123456") {
       setError(true);
       return;
     }
