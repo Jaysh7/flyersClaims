@@ -16,6 +16,8 @@ import { CLAIMS, DEPARTMENTS, EMPLOYEE } from "./constants";
 import { uploadClaimAttachment } from "./stoarage.firebase";
 import { getFileExtension } from "../../utils/functions";
 import { getDownloadURL, ref } from "firebase/storage";
+import { errorService } from "../error/error.service";
+import { message } from "antd";
 
 export async function useUserListener(uid: string, callback: any) {
   const [isListenerActive, setIsListenerActive] = useState(false);
@@ -31,7 +33,8 @@ export async function useUserListener(uid: string, callback: any) {
             }
           );
           setIsListenerActive(true);
-        } catch (error) {
+        } catch (error: any) {
+          message.error(errorService(error.message));
           console.error(error);
         }
       }
@@ -43,7 +46,8 @@ export async function useUserListener(uid: string, callback: any) {
           // To turn-off the listener
           userListenerRef.current();
           userListenerRef.current = undefined;
-        } catch (error) {
+        } catch (error: any) {
+          message.error(errorService(error.message));
           console.error(error);
         }
       }
@@ -68,7 +72,8 @@ export async function useClaimsListener(uid: string, callback: any) {
             callback(cities);
           });
           setIsListenerActive(true);
-        } catch (error) {
+        } catch (error: any) {
+          message.error(errorService(error.message));
           console.error(error);
         }
       }
@@ -80,7 +85,8 @@ export async function useClaimsListener(uid: string, callback: any) {
           // To turn-off the listener
           listenerRef.current();
           listenerRef.current = undefined;
-        } catch (error) {
+        } catch (error: any) {
+          message.error(errorService(error.message));
           console.error(error);
         }
       }
@@ -105,7 +111,8 @@ export async function useUsersListener(uid: string, callback: any) {
             callback(cities);
           });
           setIsListenerActive(true);
-        } catch (error) {
+        } catch (error: any) {
+          message.error(errorService(error.message));
           console.error(error);
         }
       }
@@ -117,7 +124,8 @@ export async function useUsersListener(uid: string, callback: any) {
           // To turn-off the listener
           usersListenerRef.current();
           usersListenerRef.current = undefined;
-        } catch (error) {
+        } catch (error: any) {
+          message.error(errorService(error.message));
           console.error(error);
         }
       }
@@ -135,7 +143,8 @@ export async function getAllDepartments() {
       departments.push(doc.data());
     });
     return departments;
-  } catch (error) {
+  } catch (error: any) {
+    message.error(errorService(error.message));
     console.error("get departments error", error);
   }
 }
@@ -149,7 +158,8 @@ export async function getAllLeads() {
       departments.push(doc.data());
     });
     return departments;
-  } catch (error) {
+  } catch (error: any) {
+    message.error(errorService(error.message));
     console.error("get departments error", error);
   }
 }
@@ -165,7 +175,7 @@ export async function addClaim(data: any, userId: string) {
         downloadUrl: ""
       }
     });
-    uploadClaimAttachment(
+    await uploadClaimAttachment(
       file,
       userId,
       `${docRef.id}.${getFileExtension(file.name)}`
@@ -173,7 +183,7 @@ export async function addClaim(data: any, userId: string) {
     const filePath = `${EMPLOYEE}/${userId}/${docRef.id}.${getFileExtension(
       file.name
     )}`;
-    getDownloadURL(ref(storage, filePath))
+    await getDownloadURL(ref(storage, filePath))
       .then(async (url) => {
         const washingtonRef = doc(db, CLAIMS, docRef.id);
         // Set the "capital" field of the city 'DC'
@@ -190,7 +200,31 @@ export async function addClaim(data: any, userId: string) {
         console.error("error", error);
         // Handle any errors
       });
-  } catch (error) {
+  } catch (error: any) {
+    message.error(errorService(error.message));
+    console.error("error", error);
+  }
+}
+
+export async function approveClaim(data: any) {
+  try {
+    const washingtonRef = doc(db, CLAIMS, data.id);
+    // Set the "capital" field of the city 'DC'
+    await updateDoc(washingtonRef, { ...data });
+  } catch (error: any) {
+    message.error(errorService(error.message));
+    console.error("get departments error", error);
+  }
+}
+
+export async function updateUserRole(data: any) {
+  try {
+    const washingtonRef = doc(db, EMPLOYEE, data.uid);
+    // Set the "capital" field of the city 'DC'
+    await updateDoc(washingtonRef, { ...data });
+    message.success("User role updated successfully");
+  } catch (error: any) {
+    message.error(errorService(error.message));
     console.error("get departments error", error);
   }
 }

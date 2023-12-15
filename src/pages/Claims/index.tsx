@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AddIcon } from "../../assets/icons";
 import { ClaimStatus } from "../../enums";
-import { Table, Tabs, Tag } from "antd";
+import { Table, Tabs, Tag, message } from "antd";
 import { useState } from "react";
 import { useClaims } from "../../zustand/claims.slice";
 import { useAuth } from "../../zustand/auth.slice";
@@ -14,11 +14,10 @@ import ModalComponent from "../../components/Modal/index";
 const Claims = () => {
   const claimsSlice: any = useClaims();
   const authSlice: any = useAuth();
-  console.log("authSlice", authSlice);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openBill, setOpenBill] = useState<any>({
     state: false,
-    billData: null,
+    billData: null
   });
 
   const showModal = () => {
@@ -33,11 +32,12 @@ const Claims = () => {
     setIsModalOpen(false);
     setOpenBill(false);
   };
+
   const pendingApprovalColumn = [
     {
       title: "Employee Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "employeeName",
+      key: "employeeName",
       render: (text: any, rowData: any) => (
         <a
           onClick={() => {
@@ -46,59 +46,27 @@ const Claims = () => {
         >
           {text}
         </a>
-      ),
+      )
     },
     {
       title: "Employee Id",
       dataIndex: "employee",
-      key: "employee",
+      key: "employee"
     },
     {
       title: "Reimbursement Type",
       dataIndex: "reimbursementType",
-      key: "reimbursementType",
+      key: "reimbursementType"
     },
     {
       title: "Submission date",
       dataIndex: "date",
-      key: "date",
+      key: "date"
     },
     {
       title: "Claiming amount",
       dataIndex: "amount",
-      key: "amount",
-    },
-  ];
-
-  const claims = [
-    {
-      title: "Reimbursement type",
-      dataIndex: "reimbursementType",
-      key: "reimbursementType",
-      render: (text: any, rowData: any) => (
-        <a
-          onClick={() => {
-            setOpenBill({ state: true, billData: rowData });
-          }}
-        >
-          {text}
-        </a>
-      ),
-    },
-    {
-      title: "Claim number",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Date of Submission",
-      dataIndex: "date",
-      key: "date",
-    },
-    {
-      title: "Claiming amount",
-      dataIndex: "amount",
-      key: "amount",
+      key: "amount"
     },
     {
       title: "Status",
@@ -124,8 +92,66 @@ const Claims = () => {
             );
           })()}
         </>
-      ),
+      )
+    }
+  ];
+
+  const claims = [
+    {
+      title: "Reimbursement type",
+      dataIndex: "reimbursementType",
+      key: "reimbursementType",
+      render: (text: any, rowData: any) => (
+        <a
+          onClick={() => {
+            setOpenBill({ state: true, billData: rowData });
+          }}
+        >
+          {text}
+        </a>
+      )
     },
+    {
+      title: "Claim number",
+      dataIndex: "id",
+      key: "id"
+    },
+    {
+      title: "Date of Submission",
+      dataIndex: "date",
+      key: "date"
+    },
+    {
+      title: "Claiming amount",
+      dataIndex: "amount",
+      key: "amount"
+    },
+    {
+      title: "Status",
+      key: "status",
+      dataIndex: "status",
+      render: (_: any, { status }: any) => (
+        <>
+          {(() => {
+            let color = "yellow";
+            if (status === ClaimStatus.REJECTED) {
+              color = "volcano";
+            } else if (status === ClaimStatus.APPROVE_BY_LEAD) {
+              color = "blue";
+            } else if (status === ClaimStatus.APPROVED_BY_FINANCE_OR_HR) {
+              color = "green";
+            } else if (status === ClaimStatus.PENDING) {
+              color = "yellow";
+            }
+            return (
+              <Tag color={color} key={status}>
+                {status?.toUpperCase()}
+              </Tag>
+            );
+          })()}
+        </>
+      )
+    }
   ];
 
   return (
@@ -159,19 +185,29 @@ const Claims = () => {
               modalOpen={openBill.state}
               onOk={handleOk}
               onClose={handleCancel}
-              children={<ApprovalRequest data={openBill.billData} />}
+              children={
+                <ApprovalRequest
+                  onApproveHandler={() => {}}
+                  onRejectHandler={() => {
+                    message.success("Claim rejected successfully");
+                  }}
+                  onError={() => {}}
+                  data={openBill.billData}
+                />
+              }
             />
           )}
         </div>
         <div className="mt-10">
-          {authSlice?.data?.isLead === true ? (
+          {authSlice?.data?.isLead === true ||
+          authSlice?.data?.isFinanceAdmin ? (
             <>
               <Tabs type="line">
                 <Tabs.TabPane tab=" My claims" key=" My claims">
                   <Table
                     columns={claims}
-                    dataSource={claimsSlice.data?.map((data: any) =>
-                      data?.employee === authSlice.data?.uid ? data : null
+                    dataSource={claimsSlice.data?.filter(
+                      (data: any) => data?.employee === authSlice.data?.uid
                     )}
                   />
                 </Tabs.TabPane>
@@ -179,8 +215,10 @@ const Claims = () => {
                 <Tabs.TabPane tab="Pending approvals" key=" Pending approvals">
                   <Table
                     columns={pendingApprovalColumn}
-                    dataSource={claimsSlice.data?.map((data: any) =>
-                      data?.lead === authSlice.data?.uid ? data : null
+                    dataSource={claimsSlice.data?.filter((data: any) =>
+                      authSlice.data?.isFinanceAdmin
+                        ? data?.status === ClaimStatus.APPROVE_BY_LEAD
+                        : data?.lead === authSlice.data?.uid
                     )}
                   />
                 </Tabs.TabPane>
@@ -190,7 +228,12 @@ const Claims = () => {
             <>
               <Tabs type="line">
                 <Tabs.TabPane tab=" My claims" key=" My claims">
-                  <Table columns={claims} dataSource={claimsSlice.data} />
+                  <Table
+                    columns={claims}
+                    dataSource={claimsSlice.data?.filter(
+                      (data: any) => data?.employee === authSlice?.data?.uid
+                    )}
+                  />
                 </Tabs.TabPane>
               </Tabs>
             </>

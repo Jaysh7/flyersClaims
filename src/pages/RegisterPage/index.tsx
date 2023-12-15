@@ -34,9 +34,9 @@ const RegisterPage = () => {
   };
   const emailRules = [
     {
-      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      pattern: /^[a-zA-Z0-9._%+-]+@flyerssoft\.com$/,
       required: true,
-      message: "Please enter a valid email address!"
+      message: "Please enter a valid email address! this is not belong to our org"
     }
   ];
   const passwordRules = [
@@ -51,16 +51,16 @@ const RegisterPage = () => {
   ];
   const numberOnlyRules = [
     {
-      pattern: /^[0-9]+$/,
+      pattern: /^FEC\d{4}$/,
       required: true,
-      message: "Please enter only numbers!"
+      message: "Invalid employee code format! ex: FEC0101"
     }
   ];
   const alphabeticOnlyRules = [
     {
-      pattern: /^[A-Za-z]+$/,
+      pattern: /^[a-zA-Z0-9_]+(?:\s[a-zA-Z0-9_]+)?$/,
       required: true,
-      message: "Please enter only alphabets!"
+      message: "Please enter a valid name!"
     }
   ];
   return (
@@ -80,7 +80,7 @@ const RegisterPage = () => {
             <div className="flex gap-4">
               <Form.Item
                 label="Employee Name"
-                name="employeeName"
+                name="name"
                 rules={alphabeticOnlyRules}
                 className="w-full text-black text-base font-semibold"
               >
@@ -92,7 +92,7 @@ const RegisterPage = () => {
 
               <Form.Item
                 label="Employee ID"
-                name={"employeeID"}
+                name={"employee"}
                 rules={numberOnlyRules}
                 className="w-full text-black text-base font-semibold"
               >

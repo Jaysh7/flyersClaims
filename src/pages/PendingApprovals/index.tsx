@@ -16,7 +16,7 @@ const PendingApprovals = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openBill, setOpenBill] = useState<any>({
     state: false,
-    billData: null,
+    billData: null
   });
   const showModal = () => {
     setIsModalOpen(true);
@@ -44,54 +44,54 @@ const PendingApprovals = () => {
         >
           {text}
         </a>
-      ),
+      )
     },
     {
       title: "Employee Id",
       dataIndex: "id",
-      key: "id",
+      key: "id"
     },
     {
       title: "Reimbursement Type",
       dataIndex: "address",
-      key: "address",
+      key: "address"
     },
     {
       title: "Submission date",
       dataIndex: "address",
-      key: "address",
+      key: "address"
     },
     {
       title: "Claiming amount",
       dataIndex: "address",
-      key: "address",
-    },
+      key: "address"
+    }
   ];
   const PendingApprovalsData = [
     {
       key: "1",
       name: "John Brown",
       address: "1000",
-      id: 12333,
+      id: 12333
     },
     {
       key: "2",
       name: "Jim Green",
       address: "1000",
-      id: 12333,
+      id: 12333
     },
     {
       key: "3",
       name: "Joe Black",
       address: "1000",
-      id: 12333,
+      id: 12333
     },
     {
       key: "3",
       name: "Joe Black",
       address: "1000",
-      id: 12333,
-    },
+      id: 12333
+    }
   ];
   const columns = [
     {
@@ -106,22 +106,22 @@ const PendingApprovals = () => {
         >
           {text}
         </a>
-      ),
+      )
     },
     {
       title: "Claim number",
       dataIndex: "name",
-      key: "name",
+      key: "name"
     },
     {
       title: "Date of Submission",
       dataIndex: "name",
-      key: "name",
+      key: "name"
     },
     {
       title: "Claiming amount",
       dataIndex: "amount",
-      key: "amount",
+      key: "amount"
     },
     {
       title: "Status",
@@ -147,8 +147,8 @@ const PendingApprovals = () => {
             );
           })()}
         </>
-      ),
-    },
+      )
+    }
   ];
 
   return (
@@ -172,7 +172,14 @@ const PendingApprovals = () => {
             modalOpen={openBill.state}
             onOk={handleOk}
             onClose={handleCancel}
-            children={<ApprovalRequest data={openBill.billData} />}
+            children={
+              <ApprovalRequest
+                onApproveHandler={() => {}}
+                onError={() => {}}
+                onRejectHandler={() => {}}
+                data={openBill.billData}
+              />
+            }
           />
         )}
         <>
@@ -191,7 +198,6 @@ const PendingApprovals = () => {
             // defaultActiveKey="tab1"
             type="line"
             // onEdit={({ e, action }: any) => {
-            //   console.log(e, action);
             // }}
           >
             <Tabs.TabPane tab=" My claims" key=" My claims">

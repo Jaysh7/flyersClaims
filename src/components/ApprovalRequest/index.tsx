@@ -5,14 +5,68 @@ import { Button, Form, Input } from "antd";
 import { getFileType } from "../../utils/functions";
 import FileTypeIcon from "../FileTypeIcon";
 import { useAuth } from "../../zustand/auth.slice";
+import { approveClaim } from "../../services/firebase/database.firebase";
+import { ClaimStatus } from "../../enums";
 
-const ApprovalRequest = ({ data }: { data: any }) => {
+const ApprovalRequest = ({
+  data,
+  onApproveHandler,
+  onRejectHandler,
+  onError
+}: {
+  data: any;
+  onApproveHandler: any;
+  onRejectHandler: any;
+  onError: any;
+}) => {
   const authSlice: any = useAuth();
   const [openPdf, setOpenPdf] = useState<any>();
   const handleViewPdf = () => {
     setOpenPdf(!openPdf);
   };
+  const getLead = (id: string) => {
+    return authSlice.users?.find((data: any) => data?.uid === id);
+  };
 
+  const onApprove = () => {
+    try {
+      if (authSlice?.data?.isLead) {
+        approveClaim({
+          ...data,
+          status: ClaimStatus.APPROVE_BY_LEAD
+        });
+      }
+      if (authSlice?.data?.isFinanceAdmin) {
+        approveClaim({
+          ...data,
+          status: ClaimStatus.APPROVED_BY_FINANCE_OR_HR
+        });
+      }
+      onApproveHandler();
+    } catch (error) {
+      onError();
+    }
+  };
+
+  const onReject = () => {
+    try {
+      if (authSlice?.data?.isLead) {
+        approveClaim({
+          ...data,
+          status: ClaimStatus.REJECTED
+        });
+      }
+      if (authSlice?.data?.isFinanceAdmin) {
+        approveClaim({
+          ...data,
+          status: ClaimStatus.REJECTED
+        });
+      }
+      onRejectHandler();
+    } catch (error) {
+      onError();
+    }
+  };
   return (
     <>
       {openPdf ? (
@@ -45,7 +99,7 @@ const ApprovalRequest = ({ data }: { data: any }) => {
                 label="Lead"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input value={data?.lead} readOnly />
+                <Input value={getLead(data?.lead)?.name} readOnly />
               </Form.Item>
               <Form.Item
                 label="Date"
@@ -121,10 +175,14 @@ const ApprovalRequest = ({ data }: { data: any }) => {
             <Button
               className="border-[rgba(119,0,199,1)] border-2 text-[rgba(119,0,199,1)] bg-[#E0C9EF] text-base
            font-normal flex items-center"
+              onClick={onReject}
             >
               Reject
             </Button>
-            <Button className="bg-[rgba(119,0,199,1)] text-white text-base font-normal flex items-center">
+            <Button
+              className="bg-[rgba(119,0,199,1)] text-white text-base font-normal flex items-center"
+              onClick={onApprove}
+            >
               Approve
             </Button>
           </>

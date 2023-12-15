@@ -1,7 +1,7 @@
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { EMPLOYEE } from "./constants";
 
-export function uploadClaimAttachment(
+export async function uploadClaimAttachment(
   file: any,
   userId: string,
   claimAttachment: string
@@ -10,5 +10,5 @@ export function uploadClaimAttachment(
   const storageRef = ref(storage, `${EMPLOYEE}/${userId}/${claimAttachment}`);
 
   // 'file' comes from the Blob or File API
-  uploadBytes(storageRef, file).then(() => {});
+  await uploadBytes(storageRef, file).then(() => {});
 }

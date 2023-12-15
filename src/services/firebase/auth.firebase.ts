@@ -4,11 +4,13 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
+  signOut
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "./config";
 import { EMPLOYEE } from "./constants";
+import { message } from "antd";
+import { errorService } from "../error/error.service";
 
 const auth = {
   login: (email: string, password: string, callback: Function) => {
@@ -18,7 +20,8 @@ const auth = {
         // Signed in
         callback({ uid: userCredential.user?.uid });
       })
-      .catch((error) => {
+      .catch((error: any) => {
+        message.error(errorService(error.message));
         console.error("error", error);
       });
   },
@@ -33,6 +36,7 @@ const auth = {
         setDoc(doc(db, EMPLOYEE, user?.uid), { ...data, uid: user?.uid });
       })
       .catch((error) => {
+        message.error(errorService(error.message));
         console.error("error", error);
       });
   },
@@ -40,13 +44,14 @@ const auth = {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
-        stateClearCallback(null);
+        stateClearCallback();
         // Sign-out successful.
       })
       .catch((error) => {
+        message.error(errorService(error.message));
         console.error("error", error);
         // An error happened.
       });
-  },
+  }
 };
 export default auth;

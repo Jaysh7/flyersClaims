@@ -1,22 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { Button, DatePicker, Form, Input, Select, Upload, message } from "antd";
+import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
 import { UploadIcon } from "../../assets/icons";
 import { addClaim } from "../../services/firebase/database.firebase";
 import { useAuth } from "../../zustand/auth.slice";
 import { ClaimStatus } from "../../enums";
 import FileTypeIcon from "../FileTypeIcon";
-import { getFileExtension } from "../../utils/functions";
 
 const { TextArea } = Input;
 
 const ApplyReimbursement: React.FC = () => {
   const authSlice: any = useAuth();
   const [file, setFile] = useState<any>();
-  console.log("authSlice", authSlice.users);
 
-  const onFinish = (data: any) => {
-    addClaim(
+  const onFinish = async (data: any) => {
+    await addClaim(
       {
         ...data,
         status: ClaimStatus.PENDING,
@@ -44,12 +42,7 @@ const ApplyReimbursement: React.FC = () => {
     }
   ];
   return (
-    <Form
-      disabled={false}
-      style={{ maxWidth: 600 }}
-      layout="vertical"
-      onFinish={onFinish}
-    >
+    <Form style={{ maxWidth: 600 }} layout="vertical" onFinish={onFinish}>
       <section className="flex justify-between gap-10">
         <Form.Item
           label="Title"
@@ -83,7 +76,6 @@ const ApplyReimbursement: React.FC = () => {
         <Form.Item
           label="Date"
           name={"date"}
-          rules={numberOnlyRules}
           required={true}
           className="w-full text-black text-base font-semibold"
         >
@@ -148,20 +140,21 @@ const ApplyReimbursement: React.FC = () => {
             listType="picture-card"
             className="avatar-uploader"
             showUploadList={false}
-            beforeUpload={(file) => {
-              if (
-                !["pdf", "jpg", "png", "jpeg"].includes(
-                  getFileExtension(file.name)
-                )
-              ) {
-                message.error(`Please upload a pdf or image file`);
-                return false;
-              } else {
-                fileSelectHandler(file);
-                return true;
-              }
+            beforeUpload={() => {
+              return true;
+              // if (
+              //   !["pdf", "jpg", "png", "jpeg"].includes(
+              //     getFileExtension(file.name)
+              //   )
+              // ) {
+              //   message.error(`Please upload a pdf or image file`);
+              //   return false;
+              // } else {
+              //   fileSelectHandler(file);
+              //   return true;
+              // }
             }}
-            // onChange={fileSelectHandler}
+            onChange={fileSelectHandler}
           >
             <div>
               <UploadIcon className="h-9 w-9" />

@@ -4,9 +4,11 @@ import Button from "../button";
 import auth from "../../services/firebase/auth.firebase";
 import { useAuth } from "../../zustand/auth.slice";
 import { Logo } from "../../assets/icons";
+import { useClaims } from "../../zustand/claims.slice";
 
 const Header = () => {
   const authSlice: any = useAuth();
+  const claimSlice: any = useClaims();
   return (
     <div className="shadow-xl bg-white flex min-h-[80px] justify-between items-center">
       <div className="ml-6">
@@ -19,7 +21,10 @@ const Header = () => {
         <div className="flex justify-center items-center">
           <Button
             onClick={() => {
-              auth.logout(authSlice.addAuthData);
+              auth.logout(() => {
+                authSlice.reset();
+                claimSlice.reset();
+              });
             }}
             variant="secondary"
             children={"Logout"}

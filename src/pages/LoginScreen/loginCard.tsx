@@ -20,19 +20,21 @@ const LoginCard = () => {
   const navigate = useNavigate();
   const emailRules = [
     {
-      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      message: "Please enter a valid email address!",
-    },
+      pattern: /^[a-zA-Z0-9._%+-]+@flyerssoft\.com$/,
+      required: true,
+      message:
+        "Please enter a valid email address! this is not belong to our org"
+    }
   ];
   const passwordRules = [
     {
       required: true,
-      message: "Please input your password!",
+      message: "Please input your password!"
     },
     {
       pattern: /^.{6,}$/,
-      message: "Password should contain at least 6 characters",
-    },
+      message: "Password should contain at least 6 characters"
+    }
   ];
 
   return (

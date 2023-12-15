@@ -20,16 +20,18 @@ function App() {
   useUserListener(authSlice.data?.uid, authSlice.addAuthData);
   useUsersListener(authSlice.data?.uid, authSlice.setUsersData);
   useClaimsListener(authSlice.data?.uid, claimsSlice.setClaims);
-  //console.log(authSlice.data.isLead)
-  
 
   useEffect(() => {
     if (authSlice.data?.uid) {
       if (
         location.pathname.includes("login") ||
+        location.pathname.includes("users") ||
         location.pathname.includes("signup")
       ) {
         navigate("/claims");
+      }
+      if (authSlice.data?.isAdmin && !location.pathname.includes("users")) {
+        navigate("/users");
       }
     }
     if (!authSlice.data?.uid) {
@@ -41,7 +43,7 @@ function App() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, authSlice.data]);
+  }, [location.pathname, authSlice.data?.uid, authSlice.data?.isAdmin]);
 
   return <RouterWrapper />;
 }
