@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button, Form, Input } from "antd";
 import { getFileType } from "../../utils/functions";
 import FileTypeIcon from "../FileTypeIcon";
+import { useAuth } from "../../zustand/auth.slice";
 
 const ApprovalRequest = ({ data }: { data: any }) => {
+  const authSlice: any = useAuth();
   const [openPdf, setOpenPdf] = useState<any>();
   const handleViewPdf = () => {
     setOpenPdf(!openPdf);
@@ -119,7 +122,7 @@ const ApprovalRequest = ({ data }: { data: any }) => {
         </div>
       </>
       <section className="flex gap-4 justify-center items-center">
-        {openPdf ? null : (
+        {authSlice?.data?.uid !== data?.employee ? (
           <>
             <Button
               className="border-[rgba(119,0,199,1)] border-2 text-[rgba(119,0,199,1)] bg-[#E0C9EF] text-base
@@ -131,7 +134,7 @@ const ApprovalRequest = ({ data }: { data: any }) => {
               Approve
             </Button>
           </>
-        )}
+        ) : null}
       </section>
     </>
   );

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Header from "../../components/header";
 import { AddIcon } from "../../assets/icons";
 import { ClaimStatus } from "../../enums";
 import { Table, Tabs, Tag } from "antd";
 import { useState } from "react";
 import { useClaims } from "../../zustand/claims.slice";
-import Button from "../../components/button";
+import { useAuth } from "../../zustand/auth.slice";
 import ApplyReimbursement from "../../components/ApplyReimbursement";
 import ApprovalRequest from "../../components/ApprovalRequest";
-import ModalComponent from "../../components/modal";
-import { useAuth } from "../../zustand/auth.slice";
+import Button from "../../components/button";
+import Header from "../../components/header";
+import ModalComponent from "../../components/Modal/index";
 
 const Claims = () => {
   const claimsSlice: any = useClaims();
@@ -36,7 +36,15 @@ const Claims = () => {
       title: "Employee Name",
       dataIndex: "name",
       key: "name",
-      render: (text: any) => <a>{text}</a>,
+      render: (text: any, rowData: any) => (
+        <a
+          onClick={() => {
+            setOpenBill({ state: true, billData: rowData });
+          }}
+        >
+          {text}
+        </a>
+      ),
     },
     {
       title: "Employee Id",
@@ -150,8 +158,7 @@ const Claims = () => {
       <Header />
       <div className="px-7">
         <div className="mt-10 flex justify-between">
-          <div className="flex gap-3">
-          </div>
+          <div className="flex gap-3"></div>
           <Button
             className="px-8 py-2 cursor-pointer"
             onClick={showModal}
@@ -182,33 +189,27 @@ const Claims = () => {
           )}
         </div>
         <div className="mt-10">
-          
-        {authSlice?.data?.isLead === true ? <>
-         <Tabs
-            type="line"
-           
-          >
-            <Tabs.TabPane tab=" My claims" key=" My claims">
-              <Table columns={claims} dataSource={claimsSlice.data} />
-            </Tabs.TabPane>
+          {authSlice?.data?.isLead === true ? (
+            <>
+              <Tabs type="line">
+                <Tabs.TabPane tab=" My claims" key=" My claims">
+                  <Table columns={claims} dataSource={claimsSlice.data} />
+                </Tabs.TabPane>
 
-            <Tabs.TabPane tab="Pending approvals" key=" Pending approvals">
-              <Table
-                columns={pendingapprovals}
-                dataSource={data}
-              />
-            </Tabs.TabPane>
-          </Tabs>
-         </>
-         :<>
-         <Tabs
-            type="line"
-          >
-            <Tabs.TabPane tab=" My claims" key=" My claims">
-              <Table columns={claims} dataSource={claimsSlice.data} />
-            </Tabs.TabPane>
-          </Tabs>
-         </>}
+                <Tabs.TabPane tab="Pending approvals" key=" Pending approvals">
+                  <Table columns={pendingapprovals} dataSource={data} />
+                </Tabs.TabPane>
+              </Tabs>
+            </>
+          ) : (
+            <>
+              <Tabs type="line">
+                <Tabs.TabPane tab=" My claims" key=" My claims">
+                  <Table columns={claims} dataSource={claimsSlice.data} />
+                </Tabs.TabPane>
+              </Tabs>
+            </>
+          )}
         </div>
       </div>
     </div>

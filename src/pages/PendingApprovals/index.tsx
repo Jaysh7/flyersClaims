@@ -5,7 +5,7 @@ import { Table, Tabs, Tag } from "antd";
 import Button from "../../components/button";
 import { AddIcon } from "../../assets/icons";
 import { useState } from "react";
-import ModalComponent from "../../components/modal";
+import ModalComponent from "../../components/Modal/index";
 import ApplyReimbursement from "../../components/ApplyReimbursement";
 import ApprovalRequest from "../../components/ApprovalRequest";
 import { useClaims } from "../../zustand/claims.slice";

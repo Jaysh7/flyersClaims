@@ -51,20 +51,13 @@ const ApplyReimbursement: React.FC = () => {
       <section className="flex justify-between gap-10">
         <Form.Item
           label="Title"
+          rules={alphabeticOnlyRules}
           name={"title"}
           required={true}
           className="w-full text-black text-base font-semibold"
         >
           <Input />
         </Form.Item>
-        {/* <Form.Item
-            label="Employee ID"
-            required={true}
-            name={"employee"}
-            className="w-full text-black text-base font-semibold"
-          >
-            <Input />
-          </Form.Item> */}
       </section>
       <section className="flex justify-between gap-10">
         <Form.Item
@@ -87,95 +80,40 @@ const ApplyReimbursement: React.FC = () => {
         <Form.Item
           label="Date"
           name={"date"}
-          required={true}
-          className="w-full text-black text-base font-semibold"
-        >
-          <DatePicker className="h-8 w-full" />
-        </Form.Item>
-      </section>
-      <section className="flex justify-between gap-10">
-        <Form.Item
-          label="Reimbursement Type"
-          name={"reimbursementType"}
-          required={true}
-          className="w-full text-black text-base font-semibold"
-        >
-          <Select>
-            <Select.Option value="Accommodation">Accommodation</Select.Option>
-            <Select.Option value="Internet">Internet</Select.Option>
-            <Select.Option value="Mobile">Mobile</Select.Option>
-            <Select.Option value="Subsriptions">Subsriptions</Select.Option>
-            <Select.Option value="Travel">Travel</Select.Option>
-            <Select.Option value="Miscellaneous">Miscellaneous</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Claim Amount"
-          name={"amount"}
-          required={true}
-          className="w-full text-black text-base font-semibold"
-        >
-          <Input />
-        </Form.Item>
-      </section>
-      <Form.Item
-        label="Title"
-        rules={alphabeticOnlyRules}
-        name={"title"}
-        required={true}
-        className="w-full text-black text-base font-semibold"
-      >
-        <Input />
-      </Form.Item>
-      <section className="flex justify-between gap-10">
-        <Form.Item
-          label="Lead"
-          required={true}
-          name={"lead"}
-          className="w-full text-black text-base font-semibold"
-        >
-          <Select>
-            <Select.Option value="Thamodharan">Thamodharan</Select.Option>
-            <Select.Option value="Priyanka">Priyanka</Select.Option>
-            <Select.Option value="Ananthu">Ananthu</Select.Option>
-            <Select.Option value="Gopinath">Gopinath</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Date"
-          name={"date"}
-          required={true}
-          className="w-full text-black text-base font-semibold"
-        >
-          <DatePicker className="h-8 w-full" />
-        </Form.Item>
-      </section>
-      <section className="flex justify-between gap-10">
-        <Form.Item
-          label="Reimbursement Type"
-          name={"reimbursementType"}
-          required={true}
-          className="w-full text-black text-base font-semibold"
-        >
-          <Select>
-            <Select.Option value="Accommodation">Accommodation</Select.Option>
-            <Select.Option value="Internet">Internet</Select.Option>
-            <Select.Option value="Mobile">Mobile</Select.Option>
-            <Select.Option value="Subsriptions">Subsriptions</Select.Option>
-            <Select.Option value="Travel">Travel</Select.Option>
-            <Select.Option value="Miscellaneous">Miscellaneous</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Claim Amount"
           rules={numberOnlyRules}
+          required={true}
+          className="w-full text-black text-base font-semibold"
+        >
+          <DatePicker className="h-8 w-full" />
+        </Form.Item>
+      </section>
+      <section className="flex justify-between gap-10">
+        <Form.Item
+          label="Reimbursement Type"
+          name={"reimbursementType"}
+          required={true}
+          className="w-full text-black text-base font-semibold"
+        >
+          <Select>
+            <Select.Option value="Accommodation">Accommodation</Select.Option>
+            <Select.Option value="Internet">Internet</Select.Option>
+            <Select.Option value="Mobile">Mobile</Select.Option>
+            <Select.Option value="Subsriptions">Subsriptions</Select.Option>
+            <Select.Option value="Travel">Travel</Select.Option>
+            <Select.Option value="Miscellaneous">Miscellaneous</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Claim Amount"
           name={"amount"}
+          rules={numberOnlyRules}
           required={true}
           className="w-full text-black text-base font-semibold"
         >
           <Input />
         </Form.Item>
       </section>
+
       <Form.Item
         className="w-full text-black text-base font-semibold"
         label="Remarks if any"
