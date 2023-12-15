@@ -20,7 +20,8 @@ const ApplyReimbursement: React.FC = () => {
       {
         ...data,
         status: ClaimStatus.PENDING,
-        employee: authSlice?.data?.uid
+        employee: authSlice?.data?.uid,
+        employeeName: authSlice?.data?.name
       },
       authSlice?.data?.uid
     );

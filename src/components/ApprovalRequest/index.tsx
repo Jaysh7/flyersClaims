@@ -28,13 +28,13 @@ const ApprovalRequest = ({ data }: { data: any }) => {
                 label="Employee Name"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input />
+                <Input value={data?.employeeName} readOnly />
               </Form.Item>
               <Form.Item
                 label="Employee ID"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input value={data?.data?.employee} readOnly />
+                <Input value={data?.employee} readOnly />
               </Form.Item>
             </section>
             <section className="flex justify-between gap-10">
@@ -42,13 +42,13 @@ const ApprovalRequest = ({ data }: { data: any }) => {
                 label="Lead"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input value={data?.data?.lead} readOnly />
+                <Input value={data?.lead} readOnly />
               </Form.Item>
               <Form.Item
                 label="Date"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input value={data?.data?.date} readOnly />
+                <Input value={data?.date} readOnly />
               </Form.Item>
             </section>
             <section className="flex justify-between gap-10">
@@ -56,24 +56,20 @@ const ApprovalRequest = ({ data }: { data: any }) => {
                 label="Reimbursement Type"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input value={data?.data?.reimbursementType} readOnly />
+                <Input value={data?.reimbursementType} readOnly />
               </Form.Item>
               <Form.Item
                 label="Claim Amount"
                 className="w-full text-black text-base font-semibold"
               >
-                <Input value={data?.data?.amount} readOnly />
+                <Input value={data?.amount} readOnly />
               </Form.Item>
             </section>
             <Form.Item
               className="w-full text-black text-base font-semibold"
               label="Remarks if any"
             >
-              <Input
-                value={data?.data?.description}
-                readOnly
-                className="h-[200px]"
-              />
+              <Input value={data?.description} readOnly className="h-[200px]" />
             </Form.Item>
           </Form>
         </>

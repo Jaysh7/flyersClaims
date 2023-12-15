@@ -8,15 +8,17 @@ import { useClaims } from "../../zustand/claims.slice";
 import Button from "../../components/button";
 import ApplyReimbursement from "../../components/ApplyReimbursement";
 import ApprovalRequest from "../../components/ApprovalRequest";
-import ModalComponent from "../../components/modal";
+import ModalComponent from "../../components/Modal/index";
 import { useAuth } from "../../zustand/auth.slice";
 
 const Claims = () => {
   const claimsSlice: any = useClaims();
+  const authSlice: any = useAuth();
+  console.log("authSlice", authSlice);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openBill, setOpenBill] = useState<any>({
     state: false,
-    billData: null,
+    billData: null
   });
 
   const showModal = () => {
@@ -31,59 +33,33 @@ const Claims = () => {
     setIsModalOpen(false);
     setOpenBill(false);
   };
-  const pendingapprovals = [
+  const pendingApprovalColumn = [
     {
       title: "Employee Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text: any) => <a>{text}</a>,
+      dataIndex: "employeeName",
+      key: "employeeName",
+      render: (text: any) => <a>{text}</a>
     },
     {
       title: "Employee Id",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "employee",
+      key: "employee"
     },
     {
       title: "Reimbursement Type",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "reimbursementType",
+      key: "reimbursementType"
     },
     {
       title: "Submission date",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "date",
+      key: "date"
     },
     {
       title: "Claiming amount",
-      dataIndex: "address",
-      key: "address",
-    },
-  ];
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      address: "1000",
-      id: 12333,
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      address: "1000",
-      id: 12333,
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      address: "1000",
-      id: 12333,
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      address: "1000",
-      id: 12333,
-    },
+      dataIndex: "amount",
+      key: "amount"
+    }
   ];
 
   const claims = [
@@ -99,22 +75,22 @@ const Claims = () => {
         >
           {text}
         </a>
-      ),
+      )
     },
     {
       title: "Claim number",
       dataIndex: "id",
-      key: "id",
+      key: "id"
     },
     {
       title: "Date of Submission",
       dataIndex: "date",
-      key: "date",
+      key: "date"
     },
     {
       title: "Claiming amount",
       dataIndex: "amount",
-      key: "amount",
+      key: "amount"
     },
     {
       title: "Status",
@@ -140,18 +116,16 @@ const Claims = () => {
             );
           })()}
         </>
-      ),
-    },
+      )
+    }
   ];
-  const authSlice: any = useAuth();
 
   return (
     <div>
       <Header />
       <div className="px-7">
         <div className="mt-10 flex justify-between">
-          <div className="flex gap-3">
-          </div>
+          <div className="flex gap-3"></div>
           <Button
             className="px-8 py-2 cursor-pointer"
             onClick={showModal}
@@ -182,33 +156,37 @@ const Claims = () => {
           )}
         </div>
         <div className="mt-10">
-          
-        {authSlice?.data?.isLead === true ? <>
-         <Tabs
-            type="line"
-           
-          >
-            <Tabs.TabPane tab=" My claims" key=" My claims">
-              <Table columns={claims} dataSource={claimsSlice.data} />
-            </Tabs.TabPane>
+          {authSlice?.data?.isLead === true ? (
+            <>
+              <Tabs type="line">
+                <Tabs.TabPane tab=" My claims" key=" My claims">
+                  <Table
+                    columns={claims}
+                    dataSource={claimsSlice.data?.map((data: any) =>
+                      data?.employee === authSlice.data?.uid ? data : null
+                    )}
+                  />
+                </Tabs.TabPane>
 
-            <Tabs.TabPane tab="Pending approvals" key=" Pending approvals">
-              <Table
-                columns={pendingapprovals}
-                dataSource={data}
-              />
-            </Tabs.TabPane>
-          </Tabs>
-         </>
-         :<>
-         <Tabs
-            type="line"
-          >
-            <Tabs.TabPane tab=" My claims" key=" My claims">
-              <Table columns={claims} dataSource={claimsSlice.data} />
-            </Tabs.TabPane>
-          </Tabs>
-         </>}
+                <Tabs.TabPane tab="Pending approvals" key=" Pending approvals">
+                  <Table
+                    columns={pendingApprovalColumn}
+                    dataSource={claimsSlice.data?.map((data: any) =>
+                      data?.lead === authSlice.data?.uid ? data : null
+                    )}
+                  />
+                </Tabs.TabPane>
+              </Tabs>
+            </>
+          ) : (
+            <>
+              <Tabs type="line">
+                <Tabs.TabPane tab=" My claims" key=" My claims">
+                  <Table columns={claims} dataSource={claimsSlice.data} />
+                </Tabs.TabPane>
+              </Tabs>
+            </>
+          )}
         </div>
       </div>
     </div>
