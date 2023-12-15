@@ -16,9 +16,7 @@ const ApprovalRequest = ({ data }: { data: any }) => {
         <section className=" !h-[60vh] ">
           <embed
             src={data?.attachment?.downloadUrl}
-            width="auto"
-            height="auto"
-            type={getFileType(data?.attachment?.downloadUrl)}
+            type={getFileType(data?.attachment?.name)}
             className="w-full h-full"
           />
         </section>
