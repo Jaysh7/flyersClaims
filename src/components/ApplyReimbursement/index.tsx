@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
 import { UploadIcon } from "../../assets/icons";
 import { addClaim } from "../../services/firebase/database.firebase";

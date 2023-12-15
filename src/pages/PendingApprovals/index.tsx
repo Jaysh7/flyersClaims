@@ -162,7 +162,9 @@ const PendingApprovals = () => {
             modalOpen={isModalOpen}
             onOk={handleOk}
             onClose={handleCancel}
-            children={<ApplyReimbursement />}
+            children={
+              <ApplyReimbursement onError={() => {}} onSuccess={() => {}} />
+            }
           />
         )}
         {openBill.state && (
