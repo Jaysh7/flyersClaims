@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Dropdown, Menu, Table } from "antd";
 import Header from "../../components/header";
 import { DownOutlined } from "@ant-design/icons";

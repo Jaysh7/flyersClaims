@@ -7,13 +7,13 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   useClaimsListener,
-  useUserListener
+  useUserListener,
 } from "./services/firebase/database.firebase";
 import { useClaims } from "./zustand/claims.slice";
 function App() {
   const authSlice: any = useAuth();
-  const claimsSlice: any  = useClaims();
-  const navigate: any  = useNavigate();
+  const claimsSlice: any = useClaims();
+  const navigate: any = useNavigate();
 
   // user details firebase listener
   useUserListener(authSlice.data?.uid, authSlice.addAuthData);
@@ -36,7 +36,7 @@ function App() {
         navigate("/login");
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, authSlice.data]);
 
   return <RouterWrapper />;

@@ -58,10 +58,10 @@ const ApplyReimbursement: React.FC = () => {
             className="w-full text-black text-base font-semibold"
           >
             <Select>
-              <Select.Option value="demo">Thamodharan</Select.Option>
-              <Select.Option value="demo">Priyanka</Select.Option>
-              <Select.Option value="demo">Ananthu</Select.Option>
-              <Select.Option value="demo">Gopinath</Select.Option>
+              <Select.Option value="Thamodharan">Thamodharan</Select.Option>
+              <Select.Option value="Priyanka">Priyanka</Select.Option>
+              <Select.Option value="Ananthu">Ananthu</Select.Option>
+              <Select.Option value="Gopinath">Gopinath</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
@@ -81,12 +81,12 @@ const ApplyReimbursement: React.FC = () => {
             className="w-full text-black text-base font-semibold"
           >
             <Select>
-              <Select.Option value="demo">Accommodation</Select.Option>
-              <Select.Option value="demo">Internet</Select.Option>
-              <Select.Option value="demo">Mobile</Select.Option>
-              <Select.Option value="demo">Subsriptions</Select.Option>
-              <Select.Option value="demo">Travel</Select.Option>
-              <Select.Option value="demo">Miscellaneous</Select.Option>
+              <Select.Option value="Accommodation">Accommodation</Select.Option>
+              <Select.Option value="Internet">Internet</Select.Option>
+              <Select.Option value="Mobile">Mobile</Select.Option>
+              <Select.Option value="Subsriptions">Subsriptions</Select.Option>
+              <Select.Option value="Travel">Travel</Select.Option>
+              <Select.Option value="Miscellaneous">Miscellaneous</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item

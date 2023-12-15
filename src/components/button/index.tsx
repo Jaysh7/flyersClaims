@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ButtonProps = {
   children: string;
   variant?: "primary" | "secondary" | "teritory" | undefined;
@@ -20,9 +21,9 @@ const Button = ({
       case "primary":
         return "bg-[#7700C7] border-solid border-[#7700C7] text-white rounded-lg cursor-pointer ";
       case "secondary":
-        return "text-[#7700C7] cursor-pointer  border-solid border-2 border-[#7700C7] bg-transparent rounded-lg";
+        return "text-black font-medium cursor-pointer border-solid border-2 border-[#7700C7] bg-transparent rounded-lg";
       case "teritory":
-        return "bg-transparent cursor-pointer text-[#7700C7]"
+        return "bg-transparent cursor-pointer text-[#7700C7]";
       default:
         return "text-black";
     }

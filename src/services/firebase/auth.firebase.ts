@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "./config";
@@ -46,6 +47,6 @@ const auth = {
         console.error("error", error);
         // An error happened.
       });
-  }
+  },
 };
 export default auth;

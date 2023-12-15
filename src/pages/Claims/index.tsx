@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Header from "../../components/header";
-import { Table, Tag } from "antd";
-import Button from "../../components/button";
 import { AddIcon } from "../../assets/icons";
+import { ClaimStatus } from "../../enums";
+import { Table, Tag } from "antd";
 import { useState } from "react";
+import { useClaims } from "../../zustand/claims.slice";
+import Button from "../../components/button";
 import ApplyReimbursement from "../../components/ApplyReimbursement";
 import ApprovalRequest from "../../components/ApprovalRequest";
-import { useClaims } from "../../zustand/claims.slice";
-import { ClaimStatus } from "../../enums";
 import ModalComponent from "../../components/Modal";
 
 const Claims = () => {
   const claimsSlice: any = useClaims();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [openBill, setOpenBill] = useState<any>({
     state: false,
     billData: null,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const showModal = () => {
     setIsModalOpen(true);
     setOpenBill(false);
