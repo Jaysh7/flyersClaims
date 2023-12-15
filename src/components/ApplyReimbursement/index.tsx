@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
 import { UploadIcon } from "../../assets/icons";
 
 const { TextArea } = Input;
 
 const ApplyReimbursement: React.FC = () => {
+  const [claims , setClaims] = useState<any>([])
+  const onFinish = (data: any) => {
+    setClaims(data)
+  };
+  console.log(claims, "data");
   return (
     <>
-      <Form disabled={false} style={{ maxWidth: 600 }} layout="vertical">
+      <Form
+        disabled={false}
+        style={{ maxWidth: 600 }}
+        layout="vertical"
+        onFinish={onFinish}
+      >
         <section className="flex justify-between gap-10">
           <Form.Item
             label="Employee Name"
+            name={"EmployeeName"}
             required={true}
             className="w-full text-black text-base font-semibold"
           >
@@ -19,6 +30,7 @@ const ApplyReimbursement: React.FC = () => {
           <Form.Item
             label="Employee ID"
             required={true}
+            name={"EmployeeID"}
             className="w-full text-black text-base font-semibold"
           >
             <Input />
@@ -28,6 +40,7 @@ const ApplyReimbursement: React.FC = () => {
           <Form.Item
             label="Lead"
             required={true}
+            name={"lead"}
             className="w-full text-black text-base font-semibold"
           >
             <Select>
@@ -40,6 +53,7 @@ const ApplyReimbursement: React.FC = () => {
           </Form.Item>
           <Form.Item
             label="DatePicker"
+            name={"datepicker"}
             required={true}
             className="w-full text-black text-base font-semibold"
           >
@@ -49,6 +63,7 @@ const ApplyReimbursement: React.FC = () => {
         <section className="flex justify-between gap-10">
           <Form.Item
             label="Reimbursement Type"
+            name={"reimbursementType"}
             required={true}
             className="w-full text-black text-base font-semibold"
           >
@@ -58,6 +73,7 @@ const ApplyReimbursement: React.FC = () => {
           </Form.Item>
           <Form.Item
             label="Claim Amount"
+            name={"claimAmount"}
             required={true}
             className="w-full text-black text-base font-semibold"
           >
@@ -67,6 +83,7 @@ const ApplyReimbursement: React.FC = () => {
         <Form.Item
           className="w-full text-black text-base font-semibold"
           label="Remarks if any"
+          name={"remarks"}
         >
           <TextArea
             value="Type remarks if any"
@@ -75,12 +92,16 @@ const ApplyReimbursement: React.FC = () => {
         </Form.Item>
         <Form.Item
           label="Bill Attachment"
+          name={"bill"}
           className=" text-black text-base font-semibold"
           required={true}
           // valuePropName="Type remarks if any"
           // getValueFromEvent={normFile}
         >
           <Upload
+            beforeUpload={() => {
+              /* update state here */ return false;
+            }}
             name="avatar"
             listType="picture-card"
             className="avatar-uploader"
@@ -94,7 +115,11 @@ const ApplyReimbursement: React.FC = () => {
           </Upload>
         </Form.Item>
         <section className="flex justify-center items-center">
-          <Button className="bg-[rgba(119,0,199,1)] text-white text-base font-normal flex items-center">
+          <Button
+            type="primary"
+            className="w-full bg-[#7700C7]"
+            htmlType="submit"
+          >
             Submit
           </Button>
         </section>

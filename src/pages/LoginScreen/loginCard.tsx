@@ -11,16 +11,7 @@ const LoginCard = () => {
   const authSlice: any = useAuth();
   const onFinish = ({ email, password }: any) => {
     auth.login(email, password, authSlice.addAuthData);
-    if (
-      email.email === "Jay@email.com" &&
-      password.password !== "123456"
-    ) {
-      setError(true);
-      return;
-    }
   };
-  console.log(authSlice, "authslice");
-  console.log(onFinish, "on");
   const navigate = useNavigate();
   const emailRules = [
     {
